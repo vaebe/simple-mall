@@ -8,7 +8,9 @@ module.exports = {
   extends: [
     'standard-with-typescript',
     'plugin:vue/vue3-essential',
-    'plugin:vue/vue3-recommended'
+    'plugin:vue/vue3-recommended',
+    'prettier',
+    'plugin:prettier/recommended'
   ],
   parser: 'vue-eslint-parser',
   parserOptions: {
@@ -17,13 +19,8 @@ module.exports = {
     tsconfigRootDir: __dirname,
     extraFileExtensions: ['.vue', '.ts']
   },
-  plugins: [
-    'vue',
-    '@typescript-eslint',
-    'promise',
-    'import',
-    'n'
-  ],
+  plugins: ['vue', '@typescript-eslint', 'promise', 'import', 'n', 'prettier'],
   rules: {
+    'prettier/prettier': 'error'
   }
-}
+};
