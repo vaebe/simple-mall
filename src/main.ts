@@ -4,6 +4,7 @@ import store from './store';
 import App from './App.vue';
 
 import 'ress/ress.css';
+import '@/assets/styles/index.scss';
 
 const app = createApp(App);
 app.use(router);

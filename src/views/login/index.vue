@@ -13,7 +13,7 @@ const { userInfo } = storeToRefs(userStore);
 </script>
 
 <template>
-  <div>这里是 login 页面</div>
+  <div class="text-3xl font-bold underline">这里是 login 页面</div>
 
   <p>用户名： {{ userInfo.name }}</p>
   <button @click="setUserName('admin')">设置用户名为 admin</button>
