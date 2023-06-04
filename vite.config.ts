@@ -9,7 +9,7 @@ export default defineConfig({
     vue(),
     checker({
       eslint: {
-        lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx,vue}"'
+        lintCommand: 'eslint "./src/**/*.{ts,tsx,vue}"'
       },
       stylelint: {
         lintCommand: 'stylelint ./src/**/*.{css,vue}'
