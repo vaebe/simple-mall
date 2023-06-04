@@ -28,6 +28,8 @@ module.exports = {
         ignores: ['index', 'login']
       }
     ],
-    '@typescript-eslint/promise-function-async': 'off'
+    '@typescript-eslint/promise-function-async': 'off',
+    // 关闭: 禁止在需要布尔值的表达式中使用非布尔类型
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 };
