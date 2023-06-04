@@ -19,8 +19,15 @@ module.exports = {
     tsconfigRootDir: __dirname,
     extraFileExtensions: ['.vue', '.ts']
   },
-  plugins: ['vue', '@typescript-eslint', 'promise', 'import', 'n', 'prettier'],
+  plugins: ['vue', '@typescript-eslint', 'prettier'],
   rules: {
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    'vue/multi-word-component-names': [
+      'error',
+      {
+        ignores: ['index', 'login']
+      }
+    ],
+    '@typescript-eslint/promise-function-async': 'off'
   }
 };

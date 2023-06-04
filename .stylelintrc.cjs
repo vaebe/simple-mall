@@ -14,13 +14,14 @@ module.exports = {
     'stylelint-prettier/recommended',
 
     'stylelint-config-recommended-vue',
-    'stylelint-config-recommended-vue/scss',
+    'stylelint-config-recommended-vue/scss'
   ],
   customSyntax: 'postcss-html',
   ignoreFiles: [], // 忽略某些不想被检查的文件
   // 配置 rules
   rules: {
     // 开启 Prettier 自动格式化功能
-    'prettier/prettier': true
+    'prettier/prettier': true,
+    'no-empty-source': false
   }
 };
