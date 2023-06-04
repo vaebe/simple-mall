@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "prettier": "npx prettier --write ."
+    "prettier": "npx prettier --write .",
+    "postinstall": "husky install",
+    "lint:style": "stylelint --fix \"src/**/*.{css,scss}\"",
+    "lint:script": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --fix",
+    "lint": "npm run lint:script && npm run lint:style"
   },
   "dependencies": {
     "ress": "^5.0.2",
@@ -24,6 +28,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^9.14.1",
+    "husky": "^8.0.3",
     "postcss-html": "^1.5.0",
     "prettier": "^2.8.8",
     "stylelint": "^15.6.3",
