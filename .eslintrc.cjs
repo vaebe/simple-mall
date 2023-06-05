@@ -20,6 +20,10 @@ module.exports = {
     extraFileExtensions: ['.vue', '.ts']
   },
   plugins: ['vue', '@typescript-eslint', 'prettier'],
+  globals: {
+    ElMessage: true,
+    ElMessageBox: true
+  },
   rules: {
     'prettier/prettier': 'error',
     'vue/multi-word-component-names': [
