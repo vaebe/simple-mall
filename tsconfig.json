@@ -20,7 +20,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["vite/client", "pinia-plugin-persist"],
+    "types": ["vite/client", "pinia-plugin-persist", "element-plus/global"],
     "paths": {
       "@/*": ["src/*"]
     }

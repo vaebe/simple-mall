@@ -17,6 +17,8 @@ const { userInfo } = storeToRefs(userStore);
 
   <p>用户名： {{ userInfo.name }}</p>
   <button @click="setUserName('admin')">设置用户名为 admin</button>
+
+  <el-button type="primary">这是一个按钮</el-button>
 </template>
 
 <style lang="scss" scoped></style>
