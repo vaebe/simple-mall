@@ -1,18 +1,25 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 import { reactive } from 'vue';
 
-export const useUserStore = defineStore(
+const useUserStore = defineStore(
   'useUserStore',
   () => {
-    const userInfo = reactive({ name: 'tangshi' });
+    const userInfo = reactive({ name: 'tangshi', token: '1234' });
 
+    // 设置用户名
     const setUserName = (name: string): void => {
       userInfo.name = name;
     };
 
+    // 获取 token
+    const getToken = (): string => {
+      return userInfo.token;
+    };
+
     return {
       userInfo,
-      setUserName
+      setUserName,
+      getToken
     };
   },
   {
@@ -23,6 +30,10 @@ export const useUserStore = defineStore(
     }
   }
 );
+
+// 导出 store
+export { useUserStore };
+export default useUserStore;
 
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot));
