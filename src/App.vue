@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
 import 'dayjs/locale/zh-cn';
+
+// 设置系统名称
+const { VITE_APP_TITLE } = import.meta.env;
+document.title = VITE_APP_TITLE;
 </script>
 
 <template>
