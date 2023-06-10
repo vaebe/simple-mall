@@ -30,8 +30,8 @@ service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const { getToken } = useUserStore();
 
-    // header 中添加 token
-    config.headers.token = getToken() || '';
+    // header 中添加 authorization
+    config.headers.authorization = getToken() || '';
 
     return config;
   },
@@ -44,6 +44,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data;
+
+    console.log(res, 'ooooo');
 
     if (res.code === 401) {
       const errorText = '您已登出，请登录后进行操作！';
