@@ -22,7 +22,7 @@ const service = axios.create({
       return stringify(params, { arrayFormat: 'brackets' });
     }
   },
-  timeout: VITE_APP_AXIOS_TIMEOUT
+  timeout: parseInt(VITE_APP_AXIOS_TIMEOUT || 0)
 });
 
 // 请求拦截器
