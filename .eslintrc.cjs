@@ -34,6 +34,9 @@ module.exports = {
     ],
     '@typescript-eslint/promise-function-async': 'off',
     // 关闭: 禁止在需要布尔值的表达式中使用非布尔类型
-    '@typescript-eslint/strict-boolean-expressions': 'off'
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/no-floating-promises': 'off'
   }
 };
