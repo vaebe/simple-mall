@@ -28,15 +28,15 @@
   }
 
   .el-sub-menu__title {
-    color: var(--el-text-color-regular) !important;
+    color: var(--el-text-color-regular);
   }
 
   .el-sub-menu__title:hover {
-    background: var(--el-color-primary-light-8) !important;
+    background: var(--el-color-primary-light-8);
   }
 
   .el-menu-item {
-    color: var(--el-text-color-regular) !important;
+    color: var(--el-text-color-regular);
     border-bottom: 1px solid var(--el-background-color-base);
 
     .submenu-text {
@@ -44,16 +44,12 @@
     }
   }
 
-  .el-menu-item:hover {
-    color: var(--el-text-color-regular) !important;
-    background: var(--el-color-primary-light-7) !important;
-  }
-
+  .el-menu-item:hover,
   .el-menu-item.is-active,
   .el-menu-item.is-active:hover {
-    color: var(--el-text-color-regular) !important;
-    background: var(--el-color-primary-light-5) !important;
-    border-radius: 4px;
+    color: var(--el-text-color-regular);
+    background: var(--el-color-primary-light-5);
+    border-radius: var(--el-border-radius-base);
   }
 
   // 伪元素实现 菜单栏圆点
