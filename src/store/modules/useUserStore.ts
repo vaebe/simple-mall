@@ -1,25 +1,59 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 import { reactive } from 'vue';
+import type { LoginResData, UserInfo } from '@/api/login';
+import { resetObjToPrimitiveType } from '@/utils/tool';
 
 const useUserStore = defineStore(
   'useUserStore',
   () => {
-    const userInfo = reactive({ name: 'tangshi', token: '1234' });
+    const loginResData = reactive({
+      token: '',
+      expired_at: 0,
+      userInfo: {
+        avatar: '',
+        createdAt: '',
+        gender: 0,
+        id: 0,
+        nickName: '',
+        password: '',
+        phoneNumber: '',
+        role: 0,
+        updatedAt: '',
+        userAccount: ''
+      }
+    });
 
-    // 设置用户名
-    const setUserName = (name: string): void => {
-      userInfo.name = name;
+    // 设置登录返回数据
+    const setLoginResData = (data: LoginResData): void => {
+      Object.assign(loginResData, data);
+    };
+
+    // 获取用户信息
+    const getUserInfo = (): UserInfo => {
+      return loginResData.userInfo;
     };
 
     // 获取 token
     const getToken = (): string => {
-      return userInfo.token;
+      return loginResData.token;
+    };
+
+    // 退出登录
+    const loginOut = (): void => {
+      // 重置登录信息
+      Object.assign(loginResData, resetObjToPrimitiveType(loginResData));
+
+      // 清除缓存的数据
+      localStorage.clear();
+      sessionStorage.clear();
     };
 
     return {
-      userInfo,
-      setUserName,
-      getToken
+      loginResData,
+      setLoginResData,
+      getUserInfo,
+      getToken,
+      loginOut
     };
   },
   {
