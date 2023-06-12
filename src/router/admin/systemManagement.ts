@@ -18,6 +18,14 @@ const router: RouteRecordRaw = {
         title: '用户管理'
       },
       component: () => import('@/views/systemManagement/user/index.vue')
+    },
+    {
+      path: 'role',
+      name: 'role',
+      meta: {
+        title: '角色管理'
+      },
+      component: () => import('@/views/systemManagement/role/index.vue')
     }
   ]
 };
