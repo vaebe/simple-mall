@@ -1,5 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import type { LoginResData, UserInfo } from '@/api/login';
 import { resetObjToPrimitiveType } from '@/utils/tool';
 
@@ -12,20 +13,26 @@ const useUserStore = defineStore(
       userInfo: {
         avatar: '',
         createdAt: '',
-        gender: 0,
+        gender: '',
         id: 0,
         nickName: '',
         password: '',
         phoneNumber: '',
-        role: 0,
+        role: '',
         updatedAt: '',
         userAccount: ''
       }
     });
 
+    const router = useRouter();
+
     // 设置登录返回数据
     const setLoginResData = (data: LoginResData): void => {
       Object.assign(loginResData, data);
+
+      if (data.userInfo.role === '00') {
+        router.push('/admin');
+      }
     };
 
     // 获取用户信息
@@ -39,13 +46,15 @@ const useUserStore = defineStore(
     };
 
     // 退出登录
-    const loginOut = (): void => {
+    const loginOut = async (): Promise<void> => {
       // 重置登录信息
       Object.assign(loginResData, resetObjToPrimitiveType(loginResData));
 
       // 清除缓存的数据
       localStorage.clear();
       sessionStorage.clear();
+
+      await router.push('/login');
     };
 
     return {
@@ -60,7 +69,7 @@ const useUserStore = defineStore(
     persist: {
       enabled: true,
       // 将 userInfo 放到 sessionStorage 做持久化，不设置默认持久化全部数据
-      strategies: [{ storage: sessionStorage, paths: ['userInfo'] }]
+      strategies: [{ storage: sessionStorage, paths: ['loginResData'] }]
     }
   }
 );
