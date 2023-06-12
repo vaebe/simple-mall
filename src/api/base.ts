@@ -9,18 +9,27 @@ export interface ResultData<T> {
   msg: string;
 }
 
+export interface ResultPageListData<T> {
+  code: number;
+  data: {
+    list: T;
+    pageNo: number;
+    pageSize: number;
+    total: number;
+  };
+  msg: string;
+}
+
 const { VITE_APP_AXIOS_TIMEOUT, VITE_APP_BASE_URL } = import.meta.env;
 
 // 创建axios实例
 const service = axios.create({
   baseURL: VITE_APP_BASE_URL,
-  paramsSerializer: {
-    encode: (params) => {
-      // get 请求添加时间戳  防止缓存
-      params.client = 'web';
-      params.timestamp = new Date().getTime();
-      return stringify(params, { arrayFormat: 'brackets' });
-    }
+  paramsSerializer: (params) => {
+    // get 请求添加时间戳  防止缓存
+    params.client = 'web';
+    params.timestamp = new Date().getTime();
+    return stringify(params, { arrayFormat: 'brackets' });
   },
   timeout: parseInt(VITE_APP_AXIOS_TIMEOUT || 0)
 });
