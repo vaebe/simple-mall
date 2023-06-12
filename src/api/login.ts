@@ -4,12 +4,12 @@ import type { ResultData } from './base';
 export interface UserInfo {
   avatar: string;
   createdAt: string;
-  gender: number;
+  gender: string;
   id: number;
   nickName: string;
   password: string;
   phoneNumber: string;
-  role: number;
+  role: string;
   updatedAt: string;
   userAccount: string;
 }
