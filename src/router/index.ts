@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
+import adminRouter from './admin';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -9,7 +10,7 @@ const routes: RouteRecordRaw[] = [
       return `${to.path}login`;
     },
     component: () => import('@/components/ViewComponent.vue'),
-    children: []
+    children: [adminRouter]
   },
   {
     path: '/login',
