@@ -45,8 +45,6 @@ service.interceptors.response.use(
   (response) => {
     const res = response.data;
 
-    console.log(res, 'ooooo');
-
     if (res.code === 401) {
       const errorText = '您已登出，请登录后进行操作！';
       ElMessage.warning(errorText);
