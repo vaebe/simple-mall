@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import type { PropType } from 'vue';
-import { saveOrUpdateUser } from '@/api/admin/user';
+import { saveOrUpdateUser } from '@/api/admin/systemManagement/user';
 import { usePageListDialog } from '@/composables/usePageList';
-import type { RoleInfo } from '@/api/admin/role';
+import type { RoleInfo } from '@/api/admin/systemManagement/role';
 import { useUploadOpts } from '@/composables/useFile';
 import { Plus } from '@element-plus/icons-vue';
 import type { FormRules, UploadProps } from 'element-plus';

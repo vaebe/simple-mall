@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { reactive, ref, defineAsyncComponent } from 'vue';
 import { usePageList } from '@/composables/usePageList';
-import { getEnumsList, removeEnumInfo } from '@/api/admin/dictionary';
-import type { EnumInfo } from '@/api/admin/dictionary';
+import {
+  getEnumsList,
+  removeEnumInfo
+} from '@/api/admin/systemManagement/dictionary';
+import type { EnumInfo } from '@/api/admin/systemManagement/dictionary';
 
 const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue')

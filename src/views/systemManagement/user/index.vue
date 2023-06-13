@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { reactive, ref, defineAsyncComponent } from 'vue';
-import { getUserList, removeUser } from '@/api/admin/user';
+import { getUserList, removeUser } from '@/api/admin/systemManagement/user';
 import { usePageList } from '@/composables/usePageList';
-import { getRoleInfoList } from '@/api/admin/role';
-import type { RoleInfo } from '@/api/admin/role';
+import { getRoleInfoList } from '@/api/admin/systemManagement/role';
+import type { RoleInfo } from '@/api/admin/systemManagement/role';
 
 const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue')
