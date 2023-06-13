@@ -62,8 +62,12 @@ service.interceptors.response.use(
 
     if (res.code !== 0) {
       // 服务端返回错误提示就展示 否则展示
-      ElMessage.error(res.msg || '非常抱歉，遇到了一些错误！');
-      return Promise.reject(new Error(res.msg || 'error'));
+      const errortext =
+        typeof res.msg === 'string'
+          ? res.msg
+          : Object.values(res.msg).join('\r\n');
+      ElMessage.error(errortext || '非常抱歉，遇到了一些错误！');
+      return Promise.reject(new Error(errortext || 'error'));
     }
 
     return response.data;
