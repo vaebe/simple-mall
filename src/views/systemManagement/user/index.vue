@@ -83,12 +83,12 @@ const openAddAndViewDialog = (type: string, row?: any) => {
     </el-card>
 
     <el-card>
-      <div class="flex items-center justify-between mb-2">
+      <div class="flex items-center justify-between">
         <span class="text-title">{{ $route.meta.name }}</span>
         <el-button @click="openAddAndViewDialog('add')">新增</el-button>
       </div>
 
-      <el-table :data="tableData" stripe>
+      <el-table :data="tableData" stripe style="width: 100%" class="my-2">
         <el-table-column type="index" label="序号" width="90"></el-table-column>
         <el-table-column label="头像" prop="avatar" width="100">
           <template #default="scope">
@@ -165,7 +165,7 @@ const openAddAndViewDialog = (type: string, row?: any) => {
     <add-and-view-dialog
       ref="addAndViewDialogRef"
       :role-list="roleList"
-      @on-refresh-data="reset"
+      @refresh-data="reset"
     ></add-and-view-dialog>
   </div>
 </template>

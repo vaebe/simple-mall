@@ -10,6 +10,6 @@ export interface RoleInfo {
   updatedAt: string;
 }
 
-// 获取获取角色列表
+// 获取角色列表
 export const getRoleInfoList = (): Promise<ResultData<RoleInfo[]>> =>
   Api.get('/role/getRoleList');

@@ -18,7 +18,7 @@ defineProps({
   }
 });
 
-const emit = defineEmits(['on-refresh-data']);
+const emit = defineEmits(['refresh-data']);
 
 const dialogForm = reactive({
   avatar: '',
@@ -74,7 +74,7 @@ const {
   saveApi: saveOrUpdateUser,
   updateApi: saveOrUpdateUser,
   saveSuccessFunc: () => {
-    emit('on-refresh-data');
+    emit('refresh-data');
   }
 });
 
@@ -106,7 +106,7 @@ defineExpose({
       ref="dialogFormRef"
       :model="dialogForm"
       :rules="rules"
-      label-width="120px"
+      label-position="top"
       :disabled="dialogIsView"
     >
       <el-form-item label="用户账号：" prop="userAccount">
@@ -116,7 +116,7 @@ defineExpose({
         ></el-input>
       </el-form-item>
 
-      <el-form-item label="昵称" prop="nickName">
+      <el-form-item label="昵称：" prop="nickName">
         <el-input
           v-model="dialogForm.nickName"
           placeholder="请输入昵称"
@@ -124,11 +124,11 @@ defineExpose({
         ></el-input>
       </el-form-item>
 
-      <el-form-item v-if="dialogType === 'add'" prop="password" label="密码">
+      <el-form-item v-if="dialogType === 'add'" label="密码：" prop="password">
         <el-input v-model="dialogForm.password" show-password type="password" />
       </el-form-item>
 
-      <el-form-item label="手机号">
+      <el-form-item label="手机号：">
         <el-input
           v-model="dialogForm.phoneNumber"
           placeholder="请输入手机号"
@@ -136,7 +136,7 @@ defineExpose({
         ></el-input>
       </el-form-item>
 
-      <el-form-item label="性别">
+      <el-form-item label="性别：">
         <el-select v-model="dialogForm.gender" placeholder="请选择性别">
           <el-option
             v-for="item in []"
@@ -147,7 +147,7 @@ defineExpose({
         </el-select>
       </el-form-item>
 
-      <el-form-item label="角色" prop="role">
+      <el-form-item label="角色：" prop="role">
         <el-select v-model="dialogForm.role" placeholder="请选择角色">
           <el-option
             v-for="item in roleList"
@@ -158,7 +158,7 @@ defineExpose({
         </el-select>
       </el-form-item>
 
-      <el-form-item label="头像">
+      <el-form-item label="头像：">
         <el-upload
           class="w-16 h-16 flex items-start justify-center rounded border"
           :headers="uploadHeaders"
