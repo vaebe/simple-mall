@@ -12,12 +12,12 @@ const router: RouteRecordRaw = {
   component: () => import('@/components/ViewComponent.vue'),
   children: [
     {
-      path: 'user',
-      name: 'user',
+      path: 'dictionary',
+      name: 'dictionary',
       meta: {
-        title: '用户管理'
+        title: '字典管理'
       },
-      component: () => import('@/views/systemManagement/user/index.vue')
+      component: () => import('@/views/systemManagement/dictionary/index.vue')
     },
     {
       path: 'role',
@@ -26,6 +26,14 @@ const router: RouteRecordRaw = {
         title: '角色管理'
       },
       component: () => import('@/views/systemManagement/role/index.vue')
+    },
+    {
+      path: 'user',
+      name: 'user',
+      meta: {
+        title: '用户管理'
+      },
+      component: () => import('@/views/systemManagement/user/index.vue')
     }
   ]
 };
