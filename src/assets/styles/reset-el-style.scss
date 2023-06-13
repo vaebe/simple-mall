@@ -11,7 +11,10 @@
     width: 100%;
   }
 
-  /* el-menu */
+  /**
+  * el-menu
+  * =========================================================================
+  */
   .el-menu {
     border-right: none;
 
@@ -70,5 +73,13 @@
     margin-left: 10px;
     font-size: 20px;
     color: var(--el-text-color-regular) !important;
+  }
+
+  /**
+  * el-pagination
+  * =========================================================================
+  */
+  .el-pagination {
+    justify-content: right;
   }
 }
