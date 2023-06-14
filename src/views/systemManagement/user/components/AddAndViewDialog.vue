@@ -78,18 +78,7 @@ const {
   }
 });
 
-const { uploadHeaders, uploadUrl, uploadFileTypeList } = useUploadOpts();
-
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  if (!uploadFileTypeList.includes(rawFile.type)) {
-    ElMessage.error(`只能上传${uploadFileTypeList.join(', ')}类型文件`);
-    return false;
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('头像大小不能超过 2MB!');
-    return false;
-  }
-  return true;
-};
+const { uploadHeaders, uploadUrl, beforeImgUpload } = useUploadOpts();
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (response: UploadRes) => {
   dialogForm.avatar = response.data;
@@ -165,7 +154,7 @@ defineExpose({
           :action="uploadUrl"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
+          :before-upload="beforeImgUpload"
         >
           <el-image
             v-if="dialogForm.avatar"
