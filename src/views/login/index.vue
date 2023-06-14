@@ -194,7 +194,7 @@ const loginOrRegister = () => {
 
         <el-form
           ref="loginFormRef"
-          class="w-full p-1 mb-2 rounded bg-gray-50"
+          class="w-full p-1 mb-2 rounded bg-gray-50 dark:bg-stone-700"
           :model="loginForm"
           :rules="loginFormRules"
           :label-width="isLogin ? '52px' : '70px'"
