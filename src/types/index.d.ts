@@ -5,5 +5,5 @@ export type AnyObject = Record<string, any>;
 export interface PaginationParameter {
   pageSize: number;
   pageNo: number;
-  total: number;
+  total?: number;
 }

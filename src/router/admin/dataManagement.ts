@@ -15,10 +15,18 @@ const router: RouteRecordRaw = {
       path: 'productCategory',
       name: 'productCategory',
       meta: {
-        title: '商品分类'
+        title: '商品分类管理'
       },
       component: () =>
         import('@/views/dataManagement/productCategory/index.vue')
+    },
+    {
+      path: 'product',
+      name: 'product',
+      meta: {
+        title: '商品管理'
+      },
+      component: () => import('@/views/dataManagement/product/index.vue')
     }
   ]
 };

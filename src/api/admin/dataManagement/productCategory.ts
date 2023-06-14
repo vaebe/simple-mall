@@ -3,7 +3,7 @@ import type { ResultData, ResultPageListData } from '../../base';
 import type { PaginationParameter } from '@/types';
 
 interface GetProductCategoryListParams extends PaginationParameter {
-  name: string;
+  name?: string;
 }
 
 export interface ProductCategoryInfo {
