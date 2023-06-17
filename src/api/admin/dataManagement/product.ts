@@ -11,7 +11,8 @@ export interface ProductInfoPictures {
   url: string;
   name: string;
   size?: number;
-  productid?: string;
+  type?: string;
+  productId?: number;
 }
 
 export interface ProductInfo {

@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue';
 import type { PropType } from 'vue';
 import type { ProductCategoryInfo } from '@/api/admin/dataManagement/productCategory';
+import type { ProductInfo } from '@/api/admin/dataManagement/product';
 import { saveProductInfo } from '@/api/admin/dataManagement/product';
 import { usePageListDialog } from '@/composables/usePageList';
 import { Plus } from '@element-plus/icons-vue';
@@ -19,7 +20,7 @@ defineProps({
 
 const emit = defineEmits(['refresh-data']);
 
-const dialogForm = reactive({
+const dialogForm = reactive<ProductInfo>({
   id: 0,
   info: '',
   name: '',
@@ -62,6 +63,19 @@ const {
     emit('refresh-data');
   }
 });
+
+const handleUploadSuccess: UploadProps['onSuccess'] = (res, uploadFile) => {
+  const fileLen = dialogForm.pictures.length;
+  dialogForm.pictures[fileLen - 1] = {
+    url: res.data,
+    name: uploadFile.name,
+    size: uploadFile.size,
+    type: uploadFile.raw?.type,
+    productId: dialogForm.id
+  };
+
+  console.log(res, uploadFile, dialogForm.pictures, 'pppp');
+};
 
 const { uploadHeaders, uploadUrl } = useUploadOpts();
 
@@ -141,6 +155,7 @@ defineExpose({
           :action="uploadUrl"
           :headers="uploadHeaders"
           list-type="picture-card"
+          :on-success="handleUploadSuccess"
           :on-preview="handlePicturePreview"
         >
           <el-icon><Plus /></el-icon>
