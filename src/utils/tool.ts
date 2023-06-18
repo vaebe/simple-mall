@@ -37,9 +37,9 @@ export const resetObjToPrimitiveType = (
  * @param value 值的字段
  * @returns
  */
-export const findValue = (
+export const getCodeNmeByCodeId = (
   key: string,
-  list: Array<Record<string, string>>,
+  list: Array<Record<string, any>>,
   id = 'value',
   value = 'name'
 ): string => {
@@ -48,7 +48,7 @@ export const findValue = (
   }
 
   const dataList = list.filter((item) => {
-    return item[id] + '' === key + '';
+    return item[id] === key;
   });
 
   if (dataList.length === 0 || !dataList[0][value]) {

@@ -8,6 +8,7 @@ import type { ProductInfoPictures } from '@/api/admin/dataManagement/product';
 import { getProductCategoryList } from '@/api/admin/dataManagement/productCategory';
 import type { ProductCategoryInfo } from '@/api/admin/dataManagement/productCategory';
 import { usePageList } from '@/composables/usePageList';
+import { getCodeNmeByCodeId } from '@/utils/tool';
 
 const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue')
@@ -27,9 +28,8 @@ const getProductCategoryInfoList = () => {
 getProductCategoryInfoList();
 
 const searchForm = reactive({
-  nickName: '',
-  phoneNumber: '',
-  userAccount: ''
+  name: '',
+  productCategoryId: 0
 });
 
 const { reset, page, tableData, handleCurrentChange, removeRow } = usePageList({
@@ -73,13 +73,29 @@ const openAddAndViewDialog = (type: string, row?: any) => {
           <el-col :span="8">
             <el-form-item label="商品名称：">
               <el-input
-                v-model="searchForm.userAccount"
+                v-model="searchForm.name"
                 placeholder="请输入商品名称"
               ></el-input>
             </el-form-item>
           </el-col>
 
-          <el-col :span="16">
+          <el-col :span="8">
+            <el-form-item label="商品分类">
+              <el-select
+                v-model="searchForm.productCategoryId"
+                placeholder="请选择商品分类"
+              >
+                <el-option
+                  v-for="item in productCategoryInfoList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="8">
             <el-row type="flex" justify="end">
               <el-button @click="reset">重置</el-button>
               <el-button type="primary" @click="handleCurrentChange(1)">
@@ -130,10 +146,18 @@ const openAddAndViewDialog = (type: string, row?: any) => {
           width="200"
           :show-overflow-tooltip="true"
         ></el-table-column>
-        <el-table-column
-          label="商品分类"
-          prop="productCategoryId"
-        ></el-table-column>
+        <el-table-column label="商品分类" prop="productCategoryId">
+          <template #default="scope">
+            {{
+              getCodeNmeByCodeId(
+                scope.row.productCategoryId,
+                productCategoryInfoList,
+                'id',
+                'name'
+              )
+            }}
+          </template>
+        </el-table-column>
         <el-table-column
           label="创建时间"
           prop="createdAt"
