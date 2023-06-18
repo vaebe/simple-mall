@@ -64,7 +64,7 @@ defineExpose({
       <el-form-item label="商品分类code" prop="code">
         <el-input
           v-model="dialogForm.code"
-          placeholder="请输入昵称"
+          placeholder="请输入商品分类code"
           maxlength="50"
         ></el-input>
       </el-form-item>
