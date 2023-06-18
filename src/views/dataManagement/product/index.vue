@@ -4,6 +4,7 @@ import {
   getProductList,
   removeProductInfo
 } from '@/api/admin/dataManagement/product';
+import type { ProductInfoPictures } from '@/api/admin/dataManagement/product';
 import { getProductCategoryList } from '@/api/admin/dataManagement/productCategory';
 import type { ProductCategoryInfo } from '@/api/admin/dataManagement/productCategory';
 import { usePageList } from '@/composables/usePageList';
@@ -37,6 +38,26 @@ const { reset, page, tableData, handleCurrentChange, removeRow } = usePageList({
   removeRowApi: removeProductInfo
 });
 reset();
+
+// 格式化商品图片信息
+const formatPicturesInfo = (
+  list: ProductInfoPictures[]
+): { url: string; list: string[] } => {
+  // 过滤掉 mp4 类型的文件
+  const data = list.filter((item) => item.type !== 'mp4');
+
+  if (!Array.isArray(data) || data.length === 0) {
+    return {
+      url: '',
+      list: []
+    };
+  } else {
+    return {
+      url: data[0].url,
+      list: data.map((item) => item.url)
+    };
+  }
+};
 
 const addAndViewDialogRef = ref();
 const openAddAndViewDialog = (type: string, row?: any) => {
@@ -88,7 +109,16 @@ const openAddAndViewDialog = (type: string, row?: any) => {
           prop="price"
           width="100"
         ></el-table-column>
-        <el-table-column label="商品图片" prop="picture"></el-table-column>
+        <el-table-column label="商品图片" prop="pictures">
+          <template #default="scope">
+            <el-image
+              :src="formatPicturesInfo(scope.row.pictures).url"
+              fit="contain"
+              :preview-src-list="formatPicturesInfo(scope.row.pictures).list"
+              :preview-teleported="true"
+            ></el-image>
+          </template>
+        </el-table-column>
         <el-table-column
           label="商品库存"
           prop="stock"
