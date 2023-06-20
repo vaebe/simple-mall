@@ -21,6 +21,11 @@ export const getProductCategoryList = (
 ): Promise<ResultPageListData<ProductCategoryInfo[]>> =>
   Api.post('/productCategory/getProductCategoryList', data);
 
+// 获取全部商品分类
+export const getAllProductCategoryList = (): Promise<
+  ResultData<ProductCategoryInfo[]>
+> => Api.get('/productCategory/getAllProductCategory');
+
 // 保存 or 更新商品分类
 export const saveProductCategoryInfo = (
   data: ProductCategoryInfo
