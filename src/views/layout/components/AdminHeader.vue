@@ -1,18 +1,15 @@
 <script lang="ts" setup>
-import { CircleClose, Sunny, Moon } from '@element-plus/icons-vue';
-import { useDark, useToggle } from '@vueuse/core';
+import { CircleClose } from '@element-plus/icons-vue';
 import { useUserStore } from '@/store';
+import { defineAsyncComponent } from 'vue';
+
+const ThemeSwitch = defineAsyncComponent(
+  () => import('@/components/ThemeSwitch.vue')
+);
 
 const { VITE_APP_TITLE } = import.meta.env;
 
 const { loginOut } = useUserStore();
-
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
-
-const themeChange = () => {
-  toggleDark();
-};
 </script>
 
 <template>
@@ -22,12 +19,7 @@ const themeChange = () => {
     </div>
 
     <div class="flex items-center justify-end pr-4">
-      <el-button
-        :icon="isDark ? Moon : Sunny"
-        round
-        size="small"
-        @click="themeChange"
-      />
+      <theme-switch></theme-switch>
 
       <el-icon color="red" :size="20" class="ml-4" @click="loginOut">
         <circle-close />
