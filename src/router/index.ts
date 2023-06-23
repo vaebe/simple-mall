@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
 import mallRouter from './mall';
-import adminRouter from './admin';
+import backstageRouter from './backstage';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -11,7 +11,7 @@ const routes: RouteRecordRaw[] = [
       return `${to.path}mall`;
     },
     component: () => import('@/components/ViewComponent.vue'),
-    children: [mallRouter, adminRouter]
+    children: [mallRouter, backstageRouter]
   },
   {
     path: '/login',

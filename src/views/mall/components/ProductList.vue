@@ -3,7 +3,7 @@ import type { PropType } from 'vue';
 import type {
   ProductInfo,
   ProductInfoPictures
-} from '@/api/admin/dataManagement/product';
+} from '@/api/backstage/dataManagement/product';
 
 defineProps({
   productList: {

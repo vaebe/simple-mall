@@ -31,7 +31,7 @@ const useUserStore = defineStore(
       Object.assign(loginResData, data);
 
       if (data.userInfo.role === '00') {
-        router.push('/admin');
+        router.push('/backstage');
       }
     };
 

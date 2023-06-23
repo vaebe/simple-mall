@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import Header from './components/AdminHeader.vue';
-import Menu from './components/AdminMenu.vue';
+import Header from './components/LayoutHeader.vue';
+import Menu from './components/LayoutMenu.vue';
 </script>
 
 <template>

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
 const routes = router?.getRoutes() || [];
 const menuDataList =
-  routes.find((item) => item.path === '/admin')?.children || [];
+  routes.find((item) => item.path === '/backstage')?.children || [];
 
 const formatMenuData = (
   basePath: string,
@@ -24,11 +24,11 @@ const formatMenuData = (
       ...item,
       path,
       children
-    };
+    } as RouteRecordRaw;
   });
 };
 
-const menuTreeData = ref(formatMenuData('/admin/', menuDataList));
+const menuTreeData = ref(formatMenuData('/backstage/', menuDataList));
 
 const route = useRoute();
 const defaultActiveMenu = computed(() => {

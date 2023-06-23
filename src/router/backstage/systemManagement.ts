@@ -17,7 +17,8 @@ const router: RouteRecordRaw = {
       meta: {
         title: '字典管理'
       },
-      component: () => import('@/views/systemManagement/dictionary/index.vue')
+      component: () =>
+        import('@/views/backstage/systemManagement/dictionary/index.vue')
     },
     {
       path: 'role',
@@ -25,7 +26,8 @@ const router: RouteRecordRaw = {
       meta: {
         title: '角色管理'
       },
-      component: () => import('@/views/systemManagement/role/index.vue')
+      component: () =>
+        import('@/views/backstage/systemManagement/role/index.vue')
     },
     {
       path: 'user',
@@ -33,7 +35,8 @@ const router: RouteRecordRaw = {
       meta: {
         title: '用户管理'
       },
-      component: () => import('@/views/systemManagement/user/index.vue')
+      component: () =>
+        import('@/views/backstage/systemManagement/user/index.vue')
     }
   ]
 };

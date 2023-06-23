@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import { saveProductCategoryInfo } from '@/api/admin/dataManagement/productCategory';
-import { usePageListDialog } from '@/composables/usePageList';
+import { saveProductCategoryInfo } from '@/api/backstage/dataManagement/productCategory.ts';
+import { usePageListDialog } from '@/composables/usePageList.ts';
 import type { FormRules } from 'element-plus';
 
 const emit = defineEmits(['refresh-data']);

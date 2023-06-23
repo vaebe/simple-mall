@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import type { FormInstance, FormRules } from 'element-plus';
-import { resetObjToPrimitiveType } from '@/utils/tool';
-import { saveEnumInfo } from '@/api/admin/systemManagement/dictionary';
-import type { EnumInfo } from '@/api/admin/systemManagement/dictionary';
+import { resetObjToPrimitiveType } from '@/utils/tool.ts';
+import { saveEnumInfo } from '@/api/backstage/systemManagement/dictionary.ts';
+import type { EnumInfo } from '@/api/backstage/systemManagement/dictionary.ts';
 
 const emit = defineEmits(['refresh-data']);
 

@@ -1,14 +1,27 @@
 <script lang="ts" setup>
 import { reactive, ref, defineAsyncComponent } from 'vue';
 import {
-  getProductCategoryList,
-  removeProductCategoryInfo
-} from '@/api/admin/dataManagement/productCategory';
-import { usePageList } from '@/composables/usePageList';
+  getUserList,
+  removeUser
+} from '@/api/backstage/systemManagement/user.ts';
+import { usePageList } from '@/composables/usePageList.ts';
+import { getRoleInfoList } from '@/api/backstage/systemManagement/role.ts';
+import type { RoleInfo } from '@/api/backstage/systemManagement/role.ts';
 
 const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue')
 );
+
+// 获取角色列表
+const roleList = ref<RoleInfo[]>([]);
+const getRoleList = () => {
+  roleList.value = [];
+  getRoleInfoList().then((res) => {
+    roleList.value = res.data || [];
+  });
+};
+
+getRoleList();
 
 const searchForm = reactive({
   nickName: '',
@@ -18,8 +31,8 @@ const searchForm = reactive({
 
 const { reset, page, tableData, handleCurrentChange, removeRow } = usePageList({
   searchForm,
-  getListApi: getProductCategoryList,
-  removeRowApi: removeProductCategoryInfo
+  getListApi: getUserList,
+  removeRowApi: removeUser
 });
 reset();
 
@@ -35,15 +48,32 @@ const openAddAndViewDialog = (type: string, row?: any) => {
       <el-form :model="searchForm" label-width="90px">
         <el-row :gutter="10">
           <el-col :span="8">
-            <el-form-item label="分类名称：">
+            <el-form-item label="用户账号：">
               <el-input
                 v-model="searchForm.userAccount"
-                placeholder="请输入分类名称"
+                placeholder="请输入用户账号"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="手机号：">
+              <el-input
+                v-model="searchForm.phoneNumber"
+                placeholder="请输入手机号"
+                maxlength="11"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="昵称：">
+              <el-input
+                v-model="searchForm.nickName"
+                placeholder="请输入昵称"
               ></el-input>
             </el-form-item>
           </el-col>
 
-          <el-col :span="16">
+          <el-col :span="24">
             <el-row type="flex" justify="end">
               <el-button @click="reset">重置</el-button>
               <el-button type="primary" @click="handleCurrentChange(1)">
@@ -63,9 +93,36 @@ const openAddAndViewDialog = (type: string, row?: any) => {
 
       <el-table :data="tableData" stripe style="width: 100%" class="my-2">
         <el-table-column type="index" label="序号" width="90"></el-table-column>
-        <el-table-column label="商品分类名称" prop="name"></el-table-column>
-        <el-table-column label="商品分类code" prop="code"></el-table-column>
-        <el-table-column label="排序" prop="sort"></el-table-column>
+        <el-table-column label="头像" prop="avatar" width="100">
+          <template #default="scope">
+            <el-image
+              :src="scope.row.avatar"
+              class="w-10 h-10"
+              :lazy="true"
+            ></el-image>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="用户账号"
+          prop="userAccount"
+          width="200"
+        ></el-table-column>
+        <el-table-column
+          label="昵称"
+          prop="nickName"
+          width="200"
+        ></el-table-column>
+        <el-table-column
+          label="手机号"
+          prop="phoneNumber"
+          width="120"
+        ></el-table-column>
+        <el-table-column label="角色" prop="role" width="100"></el-table-column>
+        <el-table-column
+          label="性别"
+          prop="gender"
+          width="80"
+        ></el-table-column>
         <el-table-column
           label="创建时间"
           prop="createdAt"
@@ -110,6 +167,7 @@ const openAddAndViewDialog = (type: string, row?: any) => {
 
     <add-and-view-dialog
       ref="addAndViewDialogRef"
+      :role-list="roleList"
       @refresh-data="reset"
     ></add-and-view-dialog>
   </div>

@@ -18,7 +18,7 @@ const router: RouteRecordRaw = {
         title: '商品分类管理'
       },
       component: () =>
-        import('@/views/dataManagement/productCategory/index.vue')
+        import('@/views/backstage/dataManagement/productCategory/index.vue')
     },
     {
       path: 'product',
@@ -26,7 +26,8 @@ const router: RouteRecordRaw = {
       meta: {
         title: '商品管理'
       },
-      component: () => import('@/views/dataManagement/product/index.vue')
+      component: () =>
+        import('@/views/backstage/dataManagement/product/index.vue')
     }
   ]
 };

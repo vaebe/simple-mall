@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
 import type { PropType } from 'vue';
-import type { ProductCategoryInfo } from '@/api/admin/dataManagement/productCategory';
-import type { ProductInfo } from '@/api/admin/dataManagement/product';
-import { saveProductInfo } from '@/api/admin/dataManagement/product';
-import { usePageListDialog } from '@/composables/usePageList';
+import type { ProductCategoryInfo } from '@/api/backstage/dataManagement/productCategory.ts';
+import type { ProductInfo } from '@/api/backstage/dataManagement/product.ts';
+import { saveProductInfo } from '@/api/backstage/dataManagement/product.ts';
+import { usePageListDialog } from '@/composables/usePageList.ts';
 import { Plus } from '@element-plus/icons-vue';
 import type { FormRules, UploadProps } from 'element-plus';
-import { useUploadOpts } from '@/composables/useFile';
+import { useUploadOpts } from '@/composables/useFile.ts';
 
 defineProps({
   productCategoryInfoList: {

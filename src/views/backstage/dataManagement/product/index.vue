@@ -3,12 +3,12 @@ import { reactive, ref, defineAsyncComponent } from 'vue';
 import {
   getProductList,
   removeProductInfo
-} from '@/api/admin/dataManagement/product';
-import type { ProductInfoPictures } from '@/api/admin/dataManagement/product';
-import { getProductCategoryList } from '@/api/admin/dataManagement/productCategory';
-import type { ProductCategoryInfo } from '@/api/admin/dataManagement/productCategory';
-import { usePageList } from '@/composables/usePageList';
-import { getCodeNmeByCodeId } from '@/utils/tool';
+} from '@/api/backstage/dataManagement/product.ts';
+import type { ProductInfoPictures } from '@/api/backstage/dataManagement/product.ts';
+import { getProductCategoryList } from '@/api/backstage/dataManagement/productCategory.ts';
+import type { ProductCategoryInfo } from '@/api/backstage/dataManagement/productCategory.ts';
+import { usePageList } from '@/composables/usePageList.ts';
+import { getCodeNmeByCodeId } from '@/utils/tool.ts';
 
 const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue')

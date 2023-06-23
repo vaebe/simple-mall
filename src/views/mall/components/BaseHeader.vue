@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, defineAsyncComponent } from 'vue';
-import { getAllProductCategoryList } from '@/api/admin/dataManagement/productCategory';
-import type { ProductCategoryInfo } from '@/api/admin/dataManagement/productCategory';
+import { getAllProductCategoryList } from '@/api/backstage/dataManagement/productCategory';
+import type { ProductCategoryInfo } from '@/api/backstage/dataManagement/productCategory';
 
 const ThemeSwitch = defineAsyncComponent(
   () => import('@/components/ThemeSwitch.vue')

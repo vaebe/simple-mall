@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import type { PropType } from 'vue';
-import { saveOrUpdateUser } from '@/api/admin/systemManagement/user';
-import { usePageListDialog } from '@/composables/usePageList';
-import type { RoleInfo } from '@/api/admin/systemManagement/role';
-import { useUploadOpts } from '@/composables/useFile';
+import { saveOrUpdateUser } from '@/api/backstage/systemManagement/user.ts';
+import { usePageListDialog } from '@/composables/usePageList.ts';
+import type { RoleInfo } from '@/api/backstage/systemManagement/role.ts';
+import { useUploadOpts } from '@/composables/useFile.ts';
 import { Plus } from '@element-plus/icons-vue';
 import type { FormRules, UploadProps } from 'element-plus';
-import type { UploadRes } from '@/api/common';
+import type { UploadRes } from '@/api/common.ts';
 
 defineProps({
   roleList: {

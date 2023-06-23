@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { getSlideshowsByType } from '@/api/admin/dataManagement/slideshow';
-import type { SlideshowInfo } from '@/api/admin/dataManagement/slideshow';
-import { getRandomRecommendedProductList } from '@/api/admin/dataManagement/product';
-import type { ProductInfo } from '@/api/admin/dataManagement/product';
+import { getSlideshowsByType } from '@/api/backstage/dataManagement/slideshow';
+import type { SlideshowInfo } from '@/api/backstage/dataManagement/slideshow';
+import { getRandomRecommendedProductList } from '@/api/backstage/dataManagement/product';
+import type { ProductInfo } from '@/api/backstage/dataManagement/product';
 import { ref, defineAsyncComponent } from 'vue';
 
 const BaseHeader = defineAsyncComponent(

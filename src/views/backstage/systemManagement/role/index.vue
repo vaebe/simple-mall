@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { getRoleInfoList } from '@/api/admin/systemManagement/role';
-import type { RoleInfo } from '@/api/admin/systemManagement/role';
+import { getRoleInfoList } from '@/api/backstage/systemManagement/role.ts';
+import type { RoleInfo } from '@/api/backstage/systemManagement/role.ts';
 
 // 获取角色列表
 const roleList = ref<RoleInfo[]>([]);
