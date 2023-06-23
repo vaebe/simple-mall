@@ -31,16 +31,12 @@
   }
 
   .el-sub-menu__title {
-    color: var(--el-text-color-regular);
-  }
-
-  .el-sub-menu__title:hover {
-    background: var(--el-color-primary-light-8);
+    color: var(--el-text-color-primary);
+    border-bottom: 1px solid var(--el-border);
   }
 
   .el-menu-item {
-    color: var(--el-text-color-regular);
-    border-bottom: 1px solid var(--el-background-color-base);
+    color: var(--el-text-color-primary);
 
     .submenu-text {
       padding-left: 0.5vw;
@@ -50,8 +46,8 @@
   .el-menu-item:hover,
   .el-menu-item.is-active,
   .el-menu-item.is-active:hover {
-    color: var(--el-text-color-regular);
-    background: var(--el-color-primary-light-5);
+    color: var(--el-text-color-primary);
+    background: var(--el-color-primary-light-9);
     border-radius: var(--el-border-radius-base);
   }
 
@@ -59,7 +55,7 @@
   .el-menu-item.is-active::after {
     position: absolute;
     top: 50%;
-    right: 20px;
+    left: 10px;
     display: block;
     width: 4px;
     height: 12px;

@@ -85,6 +85,6 @@ const defaultActiveMenu = computed(() => {
   height: calc(100vh - 7vh);
   padding: 2vh 0.3vw 1vh;
   background: var(--el-bg-color);
-  box-shadow: var(--el-box-shadow);
+  border-right: var(--el-border);
 }
 </style>
