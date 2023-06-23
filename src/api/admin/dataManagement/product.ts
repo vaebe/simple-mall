@@ -33,6 +33,12 @@ export const getProductList = (
 ): Promise<ResultPageListData<ProductInfo[]>> =>
   Api.post('/product/getProductList', data);
 
+// 获取随机推荐商品列表
+export const getRandomRecommendedProductList = (params: {
+  total: number;
+}): Promise<ResultData<ProductInfo[]>> =>
+  Api.get('/product/getRandomRecommendedProductList', { params });
+
 // 保存 or 更新商品
 export const saveProductInfo = (
   data: ProductInfo
