@@ -34,6 +34,12 @@ export const getEnumsList = (
 ): Promise<ResultPageListData<EnumInfo[]>> =>
   Api.post('/enum/getEnumsList', data);
 
+// 根据分类获取枚举列表
+export const getEnumsByType = (params: {
+  type: string;
+}): Promise<ResultData<EnumInfo[]>> =>
+  Api.get('/enum/getEnumsByType', { params });
+
 // 保存 or 更新枚举
 export const saveEnumInfo = (data: SaveEnumInfo): Promise<ResultData<string>> =>
   Api.post('/enum/save', data);
