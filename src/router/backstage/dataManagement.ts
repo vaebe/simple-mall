@@ -28,6 +28,15 @@ const router: RouteRecordRaw = {
       },
       component: () =>
         import('@/views/backstage/dataManagement/product/index.vue')
+    },
+    {
+      path: 'slideshow',
+      name: 'slideshow',
+      meta: {
+        title: '轮播图管理'
+      },
+      component: () =>
+        import('@/views/backstage/dataManagement/slideshow/index.vue')
     }
   ]
 };

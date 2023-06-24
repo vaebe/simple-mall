@@ -12,7 +12,7 @@ interface GetSlideshowsListParams extends PaginationParameter {
 export interface SlideshowInfo {
   id?: number;
   imageURL: string;
-  JumpLink: string;
+  jumpLink: string;
   description: string;
   type: SlideshowType;
   createdAt?: string;
@@ -32,7 +32,7 @@ export const getSlideshowsByType = (params: {
   Api.get('/slideshow/getSlideshowsByType', { params });
 
 // 保存 or 更新轮播图
-export const saveSlideshowInfo = (
+export const saveOrUpdateSlideshowInfo = (
   data: SlideshowInfo
 ): Promise<ResultData<string>> => Api.post('/slideshow/save', data);
 
