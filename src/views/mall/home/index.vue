@@ -8,6 +8,9 @@ import { ref, defineAsyncComponent } from 'vue';
 const BaseHeader = defineAsyncComponent(
   () => import('@/views/mall/components/BaseHeader.vue')
 );
+const BaseFooter = defineAsyncComponent(
+  () => import('@/views/mall/components/BaseFooter.vue')
+);
 const ProductList = defineAsyncComponent(
   () => import('@/views/mall/components/ProductList.vue')
 );
@@ -56,10 +59,7 @@ getRecommendedProductList();
 
         <el-divider></el-divider>
 
-        <div class="pb-4 text-center text-sm text-gray-400">
-          <p>Released under the MIT License.</p>
-          <p>Copyright © 2023-present vaebe.</p>
-        </div>
+        <base-footer></base-footer>
       </div>
     </div>
   </el-scrollbar>
