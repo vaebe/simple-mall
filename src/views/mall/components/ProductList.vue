@@ -4,6 +4,7 @@ import type {
   ProductInfo,
   ProductInfoPictures
 } from '@/api/backstage/dataManagement/product';
+import { useRouter } from 'vue-router';
 
 defineProps({
   productList: {
@@ -18,6 +19,11 @@ const gteProductImg = (pictures: ProductInfoPictures[]) => {
   const data = pictures.filter((item) => item.type !== 'mp4');
   return data[0].url || '';
 };
+
+const router = useRouter();
+const jumpToDetails = (id: number) => {
+  router.push(`/mall/productDetails/${id}`);
+};
 </script>
 
 <template>
@@ -27,10 +33,11 @@ const gteProductImg = (pictures: ProductInfoPictures[]) => {
     <li
       v-for="item in productList"
       :key="item.id"
-      class="h-[26rem] rounded-md overflow-hidden bg-slate-200 dark:bg-slate-800 dark:text-white"
+      class="h-[28rem] rounded-md overflow-hidden bg-slate-200 dark:bg-slate-800 dark:text-white"
+      @click="jumpToDetails(item.id)"
     >
       <el-image
-        class="w-full h-[20rem]"
+        class="w-full h-[22rem]"
         :src="gteProductImg(item.pictures)"
         fit="fill"
       ></el-image>
