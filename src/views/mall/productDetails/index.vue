@@ -164,7 +164,9 @@ const purchaseQuantity = ref(1);
         </div>
 
         <!-- 商品详情 -->
-        <div class="sticky top-[8vh] z-40 py-2 px-8 flex text-sm bg-slate-100">
+        <div
+          class="sticky top-[8vh] z-40 py-2 px-8 flex text-sm bg-slate-100 dark:bg-stone-950"
+        >
           <p
             v-for="item in infoNavList"
             :key="item.code"
