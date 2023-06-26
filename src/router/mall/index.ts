@@ -18,6 +18,15 @@ const router: RouteRecordRaw = {
         title: '商城首页'
       },
       component: () => import('@/views/mall/home/index.vue')
+    },
+    {
+      path: 'productDetails/:id',
+      name: 'mall-product-details',
+      props: true,
+      meta: {
+        title: '商品详情'
+      },
+      component: () => import('@/views/mall/productDetails/index.vue')
     }
   ]
 };
