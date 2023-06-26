@@ -20,6 +20,8 @@ export interface ProductInfo {
   info: string;
   name: string;
   pictures: ProductInfoPictures[];
+  detailImages: string;
+  parameterImages: string;
   price: number;
   productCategoryId: number;
   stock: number;
@@ -48,3 +50,8 @@ export const saveProductInfo = (
 export const removeProductInfo = (params: {
   id: number;
 }): Promise<ResultData<string>> => Api.delete('/product/delete', { params });
+
+// 获取详情
+export const getProductDetails = (params: {
+  id: string;
+}): Promise<ResultData<ProductInfo>> => Api.get('/product/details', { params });
