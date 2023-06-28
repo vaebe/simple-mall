@@ -3,6 +3,7 @@ import { defineAsyncComponent, reactive, ref } from 'vue';
 import { getProductDetails } from '@/api/backstage/dataManagement/product';
 import type { ProductInfo } from '@/api/backstage/dataManagement/product';
 import { SuccessFilled } from '@element-plus/icons-vue';
+import { isVideo } from '@/utils/tool';
 
 const BaseHeader = defineAsyncComponent(
   () => import('@/views/mall/components/BaseHeader.vue')
@@ -50,7 +51,7 @@ getProductDetails({ id: props.id }).then((res) => {
   productDetails.parameterImages = JSON.parse(productDetails.parameterImages);
 
   productDetails.pictures = productDetails.pictures.filter(
-    (item) => item.type !== 'mp4'
+    (item) => !isVideo(item.url)
   );
 
   infoNavChange('01');
@@ -182,7 +183,7 @@ const purchaseQuantity = ref(1);
         </div>
         <div>
           <template v-for="item in infoImgList" :key="item">
-            <video v-if="item.includes('mp4')" :src="item"></video>
+            <video v-if="isVideo(item)" :src="item"></video>
             <el-image
               v-else
               class="w-full align-middle"

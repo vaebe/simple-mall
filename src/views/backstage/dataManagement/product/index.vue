@@ -8,7 +8,7 @@ import type { ProductInfoPictures } from '@/api/backstage/dataManagement/product
 import { getProductCategoryList } from '@/api/backstage/dataManagement/productCategory.ts';
 import type { ProductCategoryInfo } from '@/api/backstage/dataManagement/productCategory.ts';
 import { usePageList } from '@/composables/usePageList.ts';
-import { getCodeNmeByCodeId } from '@/utils/tool.ts';
+import { getCodeNameByCodeId, isVideo } from '@/utils/tool.ts';
 
 const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue')
@@ -43,8 +43,8 @@ reset();
 const formatPicturesInfo = (
   list: ProductInfoPictures[]
 ): { url: string; list: string[] } => {
-  // 过滤掉 mp4 类型的文件
-  const data = list.filter((item) => item.type !== 'mp4');
+  // 过滤掉 video 类型的文件
+  const data = list.filter((item) => !isVideo(item.url));
 
   if (!Array.isArray(data) || data.length === 0) {
     return {
@@ -149,7 +149,7 @@ const openAddAndViewDialog = (type: string, row?: any) => {
         <el-table-column label="商品分类" prop="productCategoryId">
           <template #default="scope">
             {{
-              getCodeNmeByCodeId(
+              getCodeNameByCodeId(
                 scope.row.productCategoryId,
                 productCategoryInfoList,
                 'id',

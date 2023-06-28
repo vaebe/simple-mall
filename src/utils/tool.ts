@@ -51,3 +51,14 @@ export const getCodeNameByCodeId = (
 
   return dataItem?.[value] ?? '';
 };
+
+// 根据文件名称获取文件类型
+export const getFileTypeByFileName = (fileName: string): string => {
+  return fileName.substring(fileName.lastIndexOf('.') + 1);
+};
+
+// 是否是视频
+export const isVideo = (url: string): boolean => {
+  const type = getFileTypeByFileName(url);
+  return ['mp4', 'm4v'].includes(type);
+};

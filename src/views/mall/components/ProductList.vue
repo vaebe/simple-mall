@@ -5,6 +5,7 @@ import type {
   ProductInfoPictures
 } from '@/api/backstage/dataManagement/product';
 import { useRouter } from 'vue-router';
+import { isVideo } from '@/utils/tool';
 
 defineProps({
   productList: {
@@ -16,7 +17,7 @@ defineProps({
 });
 
 const gteProductImg = (pictures: ProductInfoPictures[]) => {
-  const data = pictures.filter((item) => item.type !== 'mp4');
+  const data = pictures.filter((item) => !isVideo(item.url));
   return data[0].url || '';
 };
 
