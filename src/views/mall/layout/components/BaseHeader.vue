@@ -5,11 +5,17 @@ import type { ProductCategoryInfo } from '@/api/backstage/dataManagement/product
 import { useUserStore, useShoppingCartStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { ShoppingCart, Search } from '@element-plus/icons-vue';
+import { ShoppingCart, Search, Expand } from '@element-plus/icons-vue';
 
 const ThemeSwitch = defineAsyncComponent(
   () => import('@/components/ThemeSwitch.vue')
 );
+
+// 侧边展示商品分类列表
+const showDrawerProductTypeList = ref(false);
+const setShowDrawerProductTypeList = () => {
+  showDrawerProductTypeList.value = true;
+};
 
 const userStore = useUserStore();
 const { isLogin } = storeToRefs(userStore);
@@ -36,6 +42,13 @@ const jumpSearchProductList = () => {
   router.push(`/mall/searchProductList/${searchText.value}`);
 };
 
+// 根据商品分类搜索商品
+const searchForProductsByProductCategory = (productCategory: string) => {
+  searchText.value = productCategory;
+  jumpSearchProductList();
+  showDrawerProductTypeList.value = false;
+};
+
 // 跳转登录
 const jumpLogin = () => {
   router.push('/login');
@@ -53,15 +66,25 @@ const jumpRegister = () => {
   >
     <div class="flex items-center">
       <el-image src="/public/vite.svg" fit="fill"></el-image>
-      <ul class="flex items-center">
-        <li
-          v-for="item in productCategoryInfoList"
-          :key="item.id"
-          class="last:ml-0 py-4 px-2 text-lg font-medium cursor-pointer border-transparent border-b-2 hover:border-black"
-        >
-          {{ item.name }}
-        </li>
-      </ul>
+
+      <div class="block lg:hidden py-3">
+        <el-icon size="30" @click="setShowDrawerProductTypeList">
+          <Expand />
+        </el-icon>
+      </div>
+
+      <div class="hidden lg:block">
+        <ul class="flex items-center">
+          <li
+            v-for="item in productCategoryInfoList"
+            :key="item.id"
+            class="last:ml-0 py-4 px-2 text-lg font-medium cursor-pointer border-transparent border-b-2 hover:border-black"
+            @click="searchForProductsByProductCategory(item.name)"
+          >
+            {{ item.name }}
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="flex items-center">
@@ -95,6 +118,23 @@ const jumpRegister = () => {
 
       <theme-switch></theme-switch>
     </div>
+
+    <el-drawer
+      v-model="showDrawerProductTypeList"
+      :with-header="false"
+      direction="ltr"
+    >
+      <ul class="">
+        <li
+          v-for="item in productCategoryInfoList"
+          :key="item.id"
+          class="last:ml-0 py-4 px-2 text-lg font-medium cursor-pointer border-transparent border-b-2 hover:border-black"
+          @click="searchForProductsByProductCategory(item.name)"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
+    </el-drawer>
   </div>
 </template>
 
