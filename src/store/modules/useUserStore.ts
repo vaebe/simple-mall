@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import type { LoginResData, UserInfo } from '@/api/login';
 import { resetObjToPrimitiveType } from '@/utils/tool';
@@ -40,6 +40,8 @@ const useUserStore = defineStore(
       return loginResData.userInfo;
     };
 
+    const isLogin = computed(() => !!loginResData.userInfo.id);
+
     // 获取 token
     const getToken = (): string => {
       return loginResData.token;
@@ -62,7 +64,8 @@ const useUserStore = defineStore(
       setLoginResData,
       getUserInfo,
       getToken,
-      loginOut
+      loginOut,
+      isLogin
     };
   },
   {
