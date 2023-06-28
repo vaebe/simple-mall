@@ -9,7 +9,7 @@ const router: RouteRecordRaw = {
   redirect: (to: RouteLocationNormalized) => {
     return `${to.path}/home`;
   },
-  component: () => import('@/components/ViewComponent.vue'),
+  component: () => import('@/views/mall/layout/index.vue'),
   children: [
     {
       path: 'home',

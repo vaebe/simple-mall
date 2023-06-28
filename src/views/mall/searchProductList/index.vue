@@ -4,9 +4,6 @@ import { getProductList } from '@/api/backstage/dataManagement/product';
 import { usePageList } from '@/composables/usePageList';
 import { useRoute } from 'vue-router';
 
-const BaseHeader = defineAsyncComponent(
-  () => import('@/views/mall/components/BaseHeader.vue')
-);
 const ProductList = defineAsyncComponent(
   () => import('@/views/mall/components/ProductList.vue')
 );
@@ -29,26 +26,22 @@ if (keyword) {
 </script>
 
 <template>
-  <el-scrollbar :wrap-style="{ height: '100vh' }">
-    <div class="searchProductList w-full flex flex-col items-center">
-      <base-header></base-header>
+  <div class="searchProductList w-full flex flex-col items-center">
+    <div class="w-full xl:w-10/12 mt-4">
+      <product-list :product-list="tableData"></product-list>
 
-      <div class="w-full xl:w-10/12 mt-4">
-        <product-list :product-list="tableData"></product-list>
-
-        <div class="mt-4 flex justify-center">
-          <el-pagination
-            hide-on-single-page
-            :current-page="page.pageNo"
-            :page-size="page.pageSize"
-            layout="total,prev, pager, next,jumper"
-            :total="page.total"
-            @current-change="handleCurrentChange"
-          />
-        </div>
+      <div class="mt-4 flex justify-center">
+        <el-pagination
+          hide-on-single-page
+          :current-page="page.pageNo"
+          :page-size="page.pageSize"
+          layout="total,prev, pager, next,jumper"
+          :total="page.total"
+          @current-change="handleCurrentChange"
+        />
       </div>
     </div>
-  </el-scrollbar>
+  </div>
 </template>
 
 <style lang="scss" scoped></style>

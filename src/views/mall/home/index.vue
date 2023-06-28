@@ -5,12 +5,6 @@ import { getRandomRecommendedProductList } from '@/api/backstage/dataManagement/
 import type { ProductInfo } from '@/api/backstage/dataManagement/product';
 import { ref, defineAsyncComponent } from 'vue';
 
-const BaseHeader = defineAsyncComponent(
-  () => import('@/views/mall/components/BaseHeader.vue')
-);
-const BaseFooter = defineAsyncComponent(
-  () => import('@/views/mall/components/BaseFooter.vue')
-);
 const ProductList = defineAsyncComponent(
   () => import('@/views/mall/components/ProductList.vue')
 );
@@ -32,37 +26,18 @@ getRecommendedProductList();
 </script>
 
 <template>
-  <el-scrollbar :wrap-style="{ height: '100vh' }">
-    <div
-      class="mall-home bg-gray-100 text-black dark:bg-stone-900 dark:text-white"
-    >
-      <base-header></base-header>
+  <div class="mall-home px-4 pt-2">
+    <el-carousel height="70vh" class="rounded-xl bg-gray-200 dark:bg-stone-950">
+      <el-carousel-item v-for="item in slideshowList" :key="item.id">
+        <el-image class="w-full" :src="item.imageURL" fit="contain"></el-image>
+      </el-carousel-item>
+    </el-carousel>
 
-      <div class="px-4 pt-2">
-        <el-carousel
-          height="70vh"
-          class="rounded-xl bg-gray-200 dark:bg-stone-950"
-        >
-          <el-carousel-item v-for="item in slideshowList" :key="item.id">
-            <el-image
-              class="w-full"
-              :src="item.imageURL"
-              fit="contain"
-            ></el-image>
-          </el-carousel-item>
-        </el-carousel>
+    <h1 class="text-xl font-medium my-4">为你推荐</h1>
 
-        <h1 class="text-xl font-medium my-4">为你推荐</h1>
-
-        <!-- 商品列表 -->
-        <product-list :product-list="recommendedProductList"></product-list>
-
-        <el-divider></el-divider>
-
-        <base-footer></base-footer>
-      </div>
-    </div>
-  </el-scrollbar>
+    <!-- 商品列表 -->
+    <product-list :product-list="recommendedProductList"></product-list>
+  </div>
 </template>
 
 <style lang="scss" scoped>
