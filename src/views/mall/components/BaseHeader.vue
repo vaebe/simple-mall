@@ -5,7 +5,7 @@ import type { ProductCategoryInfo } from '@/api/backstage/dataManagement/product
 import { useUserStore, useShoppingCartStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { ShoppingCart } from '@element-plus/icons-vue';
+import { ShoppingCart, Search } from '@element-plus/icons-vue';
 
 const ThemeSwitch = defineAsyncComponent(
   () => import('@/components/ThemeSwitch.vue')
@@ -27,6 +27,14 @@ const shoppingCartStore = useShoppingCartStore();
 const { cartItemsTotal } = storeToRefs(shoppingCartStore);
 
 const router = useRouter();
+
+// 搜索文本
+const searchText = ref('');
+
+// 跳转搜索商品列表
+const jumpSearchProductList = () => {
+  router.push(`/mall/searchProductList/${searchText.value}`);
+};
 
 // 跳转登录
 const jumpLogin = () => {
@@ -57,6 +65,18 @@ const jumpRegister = () => {
     </div>
 
     <div class="flex items-center">
+      <div class="mr-2">
+        <el-input
+          v-model="searchText"
+          placeholder="请输入关键词"
+          @keyup.enter="jumpSearchProductList"
+        >
+          <template #append>
+            <el-button :icon="Search" @click="jumpSearchProductList" />
+          </template>
+        </el-input>
+      </div>
+
       <p v-if="!isLogin" class="mr-2">
         <span class="cursor-pointer hover:text-blue-400" @click="jumpLogin">
           登录

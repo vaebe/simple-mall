@@ -27,6 +27,14 @@ const router: RouteRecordRaw = {
         title: '商品详情'
       },
       component: () => import('@/views/mall/productDetails/index.vue')
+    },
+    {
+      path: 'searchProductList/:keyword',
+      name: 'mall-search-product-list',
+      meta: {
+        title: '搜索商品列表'
+      },
+      component: () => import('@/views/mall/searchProductList/index.vue')
     }
   ]
 };
