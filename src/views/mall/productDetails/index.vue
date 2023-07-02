@@ -4,6 +4,10 @@ import { getProductDetails } from '@/api/backstage/dataManagement/product';
 import type { ProductInfo } from '@/api/backstage/dataManagement/product';
 import { SuccessFilled } from '@element-plus/icons-vue';
 import { isVideo } from '@/utils/tool';
+import { useUserStore, useShoppingCartStore } from '@/store';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+import { addItemToCart } from '@/api/mall/shoppingCart';
 
 const props = defineProps({
   id: {
@@ -56,6 +60,34 @@ getProductDetails({ id: props.id }).then((res) => {
 
 // 购买数量
 const purchaseQuantity = ref(1);
+
+const userStore = useUserStore();
+const { getUserInfo } = userStore;
+const { isLogin } = storeToRefs(userStore);
+const router = useRouter();
+
+const { getCartItemsTotal } = useShoppingCartStore();
+
+// 添加到购物车
+const addToShoppingCart = () => {
+  // 未登录跳转登录页
+  if (!isLogin.value) {
+    router.push('/login');
+    return;
+  }
+  const opts = {
+    count: purchaseQuantity.value,
+    productId: productDetails.id,
+    userId: getUserInfo().id
+  };
+
+  addItemToCart(opts).then(() => {
+    ElMessage.success('加入购物车成功！');
+
+    // 添加商品成功更新商品数量
+    getCartItemsTotal();
+  });
+};
 </script>
 
 <template>
@@ -139,6 +171,7 @@ const purchaseQuantity = ref(1);
           <div class="flex mt-10">
             <div
               class="px-8 py-2 cursor-pointer rounded text-white bg-blue-500 hover:bg-blue-400"
+              @click="addToShoppingCart"
             >
               加入购物车
             </div>

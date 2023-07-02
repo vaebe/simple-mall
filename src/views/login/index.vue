@@ -7,11 +7,11 @@ import { cloneDeep } from 'lodash-es';
 import { Encrypt } from '@/utils/password';
 
 const carouselList = [
-  'http://rvdcrcklr.bkt.clouddn.com/home-carousel/home-carousel-1.jpeg',
-  'http://rvdcrcklr.bkt.clouddn.com/home-carousel/home-carousel-2.jpeg',
-  'http://rvdcrcklr.bkt.clouddn.com/home-carousel/home-carousel-3.jpeg',
-  'http://rvdcrcklr.bkt.clouddn.com/home-carousel/home-carousel-4.jpeg',
-  'http://rvdcrcklr.bkt.clouddn.com/home-carousel/home-carousel-6.jpg'
+  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-1.jpeg',
+  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-2.jpeg',
+  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-3.jpeg',
+  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-4.jpeg',
+  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-6.jpg'
 ];
 
 const { VITE_APP_TITLE } = import.meta.env;
