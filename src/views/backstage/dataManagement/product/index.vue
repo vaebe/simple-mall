@@ -4,11 +4,10 @@ import {
   getProductList,
   removeProductInfo
 } from '@/api/backstage/dataManagement/product.ts';
-import type { ProductInfoPictures } from '@/api/backstage/dataManagement/product.ts';
 import { getProductCategoryList } from '@/api/backstage/dataManagement/productCategory.ts';
 import type { ProductCategoryInfo } from '@/api/backstage/dataManagement/productCategory.ts';
 import { usePageList } from '@/composables/usePageList.ts';
-import { getCodeNameByCodeId, isVideo } from '@/utils/tool.ts';
+import { getCodeNameByCodeId, formatPicturesInfo } from '@/utils/tool.ts';
 
 const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue')
@@ -38,26 +37,6 @@ const { reset, page, tableData, handleCurrentChange, removeRow } = usePageList({
   removeRowApi: removeProductInfo
 });
 reset();
-
-// 格式化商品图片信息
-const formatPicturesInfo = (
-  list: ProductInfoPictures[]
-): { url: string; list: string[] } => {
-  // 过滤掉 video 类型的文件
-  const data = list.filter((item) => !isVideo(item.url));
-
-  if (!Array.isArray(data) || data.length === 0) {
-    return {
-      url: '',
-      list: []
-    };
-  } else {
-    return {
-      url: data[0].url,
-      list: data.map((item) => item.url)
-    };
-  }
-};
 
 const addAndViewDialogRef = ref();
 const openAddAndViewDialog = (type: string, row?: any) => {

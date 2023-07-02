@@ -1,3 +1,5 @@
+import type { ProductInfoPictures } from '@/api/backstage/dataManagement/product.ts';
+
 type PrimitiveData = Record<
   string,
   string | number | any[] | Record<string, any> | null
@@ -61,4 +63,24 @@ export const getFileTypeByFileName = (fileName: string): string => {
 export const isVideo = (url: string): boolean => {
   const type = getFileTypeByFileName(url);
   return ['mp4', 'm4v'].includes(type);
+};
+
+// 格式化商品图片信息
+export const formatPicturesInfo = (
+  list: ProductInfoPictures[]
+): { url: string; list: string[] } => {
+  // 过滤掉 video 类型的文件
+  const data = list.filter((item) => !isVideo(item.url));
+
+  if (!Array.isArray(data) || data.length === 0) {
+    return {
+      url: '',
+      list: []
+    };
+  } else {
+    return {
+      url: data[0].url,
+      list: data.map((item) => item.url)
+    };
+  }
 };
