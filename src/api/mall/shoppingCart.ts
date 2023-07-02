@@ -22,6 +22,17 @@ export const addItemToCart = (
 ): Promise<ResultData<string>> => Api.post('/shoppingCart/save', data);
 
 // 根据用户id 获取购物车信息
-export const getShoppingCartInfoByUserId = (): Promise<
+export const getShoppingCartInfo = (): Promise<
   ResultData<ShoppingCartInfo[]>
-> => Api.post('/shoppingCart/getShoppingCartInfoByUserId');
+> => Api.post('/shoppingCart/getShoppingCartInfo');
+
+// 获取购物车商品数量
+export const getTheNumberOfItemsInTheShoppingCart = (): Promise<
+  ResultData<number>
+> => Api.get('/shoppingCart/getTheNumberOfItemsInTheShoppingCart');
+
+// 删除购物车商品
+export const removeCartItem = (params: {
+  productId: number;
+}): Promise<ResultData<number>> =>
+  Api.delete('/shoppingCart/getTheNumberOfItemsInTheShoppingCart', { params });

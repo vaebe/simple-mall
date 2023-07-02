@@ -30,7 +30,9 @@ const getProductCategoryInfoList = () => {
 getProductCategoryInfoList();
 
 const shoppingCartStore = useShoppingCartStore();
+const { getCartItemsTotal } = shoppingCartStore;
 const { cartItemsTotal } = storeToRefs(shoppingCartStore);
+getCartItemsTotal();
 
 const router = useRouter();
 
@@ -112,7 +114,7 @@ const jumpRegister = () => {
         </span>
       </p>
 
-      <el-badge v-else :value="12" class="ml-2 mr-6">
+      <el-badge v-else :value="cartItemsTotal" class="ml-2 mr-6">
         <el-icon :size="cartItemsTotal"><ShoppingCart /></el-icon>
       </el-badge>
 
