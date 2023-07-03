@@ -61,8 +61,14 @@ export const getFileTypeByFileName = (fileName: string): string => {
 
 // 是否是视频
 export const isVideo = (url: string): boolean => {
-  const type = getFileTypeByFileName(url);
-  return ['mp4', 'm4v'].includes(type);
+  const fileType = getFileTypeByFileName(url);
+  const videoExtensions = ['mp4', 'm4v'];
+
+  return (
+    videoExtensions.includes(fileType) ||
+    url.includes('mp4') ||
+    url.includes('m4v')
+  );
 };
 
 // 格式化商品图片信息
