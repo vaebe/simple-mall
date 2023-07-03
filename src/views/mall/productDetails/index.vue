@@ -78,7 +78,8 @@ const addToShoppingCart = () => {
   const opts = {
     count: purchaseQuantity.value,
     productId: productDetails.id,
-    userId: getUserInfo().id
+    userId: getUserInfo().id,
+    selected: true
   };
 
   addItemToCart(opts).then(() => {
