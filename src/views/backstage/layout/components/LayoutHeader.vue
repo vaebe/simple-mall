@@ -21,7 +21,7 @@ const jumpHome = () => {
 <template>
   <div class="header-box">
     <div class="ml-4 flex items-center">
-      <el-image class="h-8 mr-2" src="/public/vite.svg" fit="fill"></el-image>
+      <el-image class="h-8 mr-2" src="/vite.svg" fit="fill"></el-image>
       <p class="cursor-pointer font-medium text-2xl" @click="jumpHome">
         {{ VITE_APP_TITLE }}
       </p>
