@@ -3,28 +3,34 @@ import type { ResultData } from '../base';
 import type { ProductInfo } from '../backstage/dataManagement/product';
 
 export interface AddItemToCartParams {
+  id?: number;
   count: number;
   productId: number;
   userId: number;
+  selected: boolean;
 }
 
-export interface ShoppingCartInfo {
-  count: number;
+export interface ShoppingCartInfo extends AddItemToCartParams {
   id: number;
-  productId: number;
   productInfo: ProductInfo;
-  userId: number;
 }
 
 // 添加商品到购物车
 export const addItemToCart = (
   data: AddItemToCartParams
-): Promise<ResultData<string>> => Api.post('/shoppingCart/save', data);
+): Promise<ResultData<string>> =>
+  Api.post('/shoppingCart/addProductToShoppingCart', data);
+
+// 批量更新购物车商品信息
+export const batchUpdateShoppingCartProductInfo = (
+  data: ShoppingCartInfo[]
+): Promise<ResultData<ShoppingCartInfo[]>> =>
+  Api.post('/shoppingCart/batchUpdateShoppingCartProductInfo', data);
 
 // 根据用户id 获取购物车信息
 export const getShoppingCartInfo = (): Promise<
   ResultData<ShoppingCartInfo[]>
-> => Api.post('/shoppingCart/getShoppingCartInfo');
+> => Api.get('/shoppingCart/getShoppingCartInfo');
 
 // 获取购物车商品数量
 export const getTheNumberOfItemsInTheShoppingCart = (): Promise<
@@ -35,4 +41,4 @@ export const getTheNumberOfItemsInTheShoppingCart = (): Promise<
 export const removeCartItem = (params: {
   productId: number;
 }): Promise<ResultData<number>> =>
-  Api.delete('/shoppingCart/getTheNumberOfItemsInTheShoppingCart', { params });
+  Api.delete('/shoppingCart/deleteShoppingCartProduct', { params });

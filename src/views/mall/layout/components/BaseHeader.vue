@@ -60,6 +60,11 @@ const jumpLogin = () => {
 const jumpRegister = () => {
   router.push('/userRegister');
 };
+
+// 跳转购物车
+const jumpShoppingCart = () => {
+  router.push('/mall/shoppingCart');
+};
 </script>
 
 <template>
@@ -115,7 +120,9 @@ const jumpRegister = () => {
       </p>
 
       <el-badge v-else :value="cartItemsTotal" class="ml-2 mr-6">
-        <el-icon :size="cartItemsTotal"><ShoppingCart /></el-icon>
+        <el-icon :size="26" @click="jumpShoppingCart">
+          <ShoppingCart />
+        </el-icon>
       </el-badge>
 
       <theme-switch></theme-switch>
