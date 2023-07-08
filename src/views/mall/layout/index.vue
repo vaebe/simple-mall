@@ -11,7 +11,9 @@ const BaseFooter = defineAsyncComponent(
 
 <template>
   <el-scrollbar :wrap-style="{ height: '100vh' }">
-    <div class="bg-gray-100 text-black dark:bg-stone-900 dark:text-white">
+    <div
+      class="min-w-[1023px] flex flex-col items-center bg-gray-100 text-black dark:bg-stone-900 dark:text-white"
+    >
       <base-header></base-header>
 
       <router-view />
