@@ -81,7 +81,7 @@ const openAddAndViewDialog = (type: string, row?: any) => {
 
     <el-card>
       <div class="flex items-center justify-between">
-        <span class="text-title">{{ $route.meta.name }}</span>
+        <span class="text-title">{{ $route.meta.title }}</span>
         <el-button @click="openAddAndViewDialog('add')">新增</el-button>
       </div>
 
