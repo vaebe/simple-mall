@@ -1,4 +1,5 @@
 import type { ProductInfoPictures } from '@/api/backstage/dataManagement/product.ts';
+import type { AddressInfo } from '@/api/backstage/dataManagement/address';
 
 type PrimitiveData = Record<
   string,
@@ -89,4 +90,17 @@ export const formatPicturesInfo = (
       list: data.map((item) => item.url)
     };
   }
+};
+
+// 将地址信息的中的省市区街道拼接展示
+export const concatenateAddressParts = (info: AddressInfo): string => {
+  const addressParts = [
+    info.provinceName,
+    info.cityName,
+    info.districtName,
+    info.streetName
+  ];
+  const filteredParts = addressParts.filter(Boolean);
+
+  return filteredParts.join('/');
 };
