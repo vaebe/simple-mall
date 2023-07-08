@@ -7,21 +7,23 @@ import { resetObjToPrimitiveType } from '@/utils/tool';
 const useUserStore = defineStore(
   'useUserStore',
   () => {
+    const userInfo = reactive({
+      avatar: '',
+      createdAt: '',
+      gender: '',
+      id: 0,
+      nickName: '',
+      password: '',
+      phoneNumber: '',
+      role: '',
+      updatedAt: '',
+      userAccount: ''
+    });
+
     const loginResData = reactive({
       token: '',
       expired_at: 0,
-      userInfo: {
-        avatar: '',
-        createdAt: '',
-        gender: '',
-        id: 0,
-        nickName: '',
-        password: '',
-        phoneNumber: '',
-        role: '',
-        updatedAt: '',
-        userAccount: ''
-      }
+      userInfo
     });
 
     const router = useRouter();
@@ -29,6 +31,7 @@ const useUserStore = defineStore(
     // 设置登录返回数据
     const setLoginResData = (data: LoginResData): void => {
       Object.assign(loginResData, data);
+      Object.assign(userInfo, data.userInfo);
 
       if (data.userInfo.role === '00') {
         router.push('/backstage');
@@ -51,6 +54,7 @@ const useUserStore = defineStore(
     const loginOut = async (): Promise<void> => {
       // 重置登录信息
       Object.assign(loginResData, resetObjToPrimitiveType(loginResData));
+      Object.assign(userInfo, resetObjToPrimitiveType(userInfo));
 
       // 清除缓存的数据
       localStorage.clear();
@@ -60,6 +64,7 @@ const useUserStore = defineStore(
     };
 
     return {
+      userInfo,
       loginResData,
       setLoginResData,
       getUserInfo,
