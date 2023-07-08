@@ -1,14 +1,19 @@
 <script lang="ts" setup>
 import { defineAsyncComponent, ref } from 'vue';
-import { concatenateAddressParts } from '@/utils/tool';
-import { removeAddressInfo } from '@/api/backstage/dataManagement/address';
+import { concatenateAddressParts, getCodeNameByCodeId } from '@/utils/tool';
+import {
+  removeAddressInfo,
+  setDefaultAddress
+} from '@/api/backstage/dataManagement/address';
 import type { AddressInfo } from '@/api/backstage/dataManagement/address';
+import { getEnumsByType } from '@/api/backstage/systemManagement/dictionary';
+import type { EnumInfo } from '@/api/backstage/systemManagement/dictionary';
 
 const AddAddressDialog = defineAsyncComponent(
   () => import('./AddAddressDialog.vue')
 );
 
-defineProps({
+const props = defineProps({
   tableData: {
     type: Array,
     default: () => {
@@ -31,6 +36,14 @@ defineProps({
 
 const emit = defineEmits(['remove', 'refresh-data']);
 
+const defaultAddressEnums = ref<EnumInfo[]>([]);
+const getDefaultAddressEnums = () => {
+  getEnumsByType({ type: 'defaultAddress' }).then((res) => {
+    defaultAddressEnums.value = res.data || [];
+  });
+};
+getDefaultAddressEnums();
+
 const removeRow = (row: AddressInfo) => {
   ElMessageBox.confirm('此操作将永久删除该数据, 是否继续?', '提示', {
     confirmButtonText: '确定',
@@ -45,6 +58,17 @@ const removeRow = (row: AddressInfo) => {
       }
     })
     .finally(() => {});
+};
+
+// 是否显示设置默认地址按钮
+const showSetDefaultAddressBut = (row: AddressInfo) => {
+  return props.showEditBut && row.defaultAddress !== '01';
+};
+
+const setDefaultAddressInfo = (row: AddressInfo) => {
+  setDefaultAddress({ id: row.id }).then(() => {
+    emit('refresh-data');
+  });
 };
 
 const addAddressDialogRef = ref();
@@ -85,12 +109,14 @@ const openAddAddressDialog = (type: string, row?: any) => {
         prop="zipCode"
         width="100"
       ></el-table-column>
-      <el-table-column
-        label="默认地址"
-        prop="defaultAddress"
-        width="90"
-      ></el-table-column>
-      <el-table-column label="操作" width="160" fixed="right">
+      <el-table-column label="默认地址" prop="defaultAddress" width="90">
+        <template #default="scope">
+          {{
+            getCodeNameByCodeId(scope.row.defaultAddress, defaultAddressEnums)
+          }}
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="230" fixed="right">
         <template #default="scope">
           <el-button
             type="primary"
@@ -107,6 +133,15 @@ const openAddAddressDialog = (type: string, row?: any) => {
           >
             修改
           </el-button>
+          <el-button
+            v-if="showSetDefaultAddressBut(scope.row)"
+            type="success"
+            link
+            @click="setDefaultAddressInfo(scope.row)"
+          >
+            默认地址
+          </el-button>
+
           <el-button
             v-if="showDelBut"
             type="danger"

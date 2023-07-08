@@ -70,5 +70,11 @@ export const removeAddressInfo = (params: {
 
 // 获取详情
 export const getAddressDetails = (params: {
-  id: string;
+  id: number;
 }): Promise<ResultData<AddressInfo>> => Api.get('/address/details', { params });
+
+// 设置默认地址
+export const setDefaultAddress = (params: {
+  id: number;
+}): Promise<ResultData<AddressInfo>> =>
+  Api.get('/address/setDefaultAddress', { params });
