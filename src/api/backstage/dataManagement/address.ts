@@ -52,7 +52,7 @@ export const getAreasByParams = (params: {
 export const getAddressList = (
   data: GetAddressListParams
 ): Promise<ResultPageListData<AddressInfo[]>> =>
-  Api.post('/address/getAddressList', data);
+  Api.post('/address/getAddressInfoList', data);
 
 // 获取用户地址信息列表
 export const getUserAddressInfoList = (): Promise<ResultData<AddressInfo[]>> =>

@@ -13,7 +13,7 @@ const router: RouteRecordRaw = {
   children: [
     {
       path: 'productCategory',
-      name: 'productCategory',
+      name: 'productCategory-management',
       meta: {
         title: '商品分类管理'
       },
@@ -22,7 +22,7 @@ const router: RouteRecordRaw = {
     },
     {
       path: 'product',
-      name: 'product',
+      name: 'product-management',
       meta: {
         title: '商品管理'
       },
@@ -30,8 +30,17 @@ const router: RouteRecordRaw = {
         import('@/views/backstage/dataManagement/product/index.vue')
     },
     {
+      path: 'address',
+      name: 'address-management',
+      meta: {
+        title: '地址管理'
+      },
+      component: () =>
+        import('@/views/backstage/dataManagement/address/index.vue')
+    },
+    {
       path: 'slideshow',
-      name: 'slideshow',
+      name: 'slideshow-management',
       meta: {
         title: '轮播图管理'
       },
