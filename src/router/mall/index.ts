@@ -1,4 +1,5 @@
 import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
+import personalCenterRouter from './personalCenter';
 
 const router: RouteRecordRaw = {
   path: 'mall',
@@ -43,7 +44,8 @@ const router: RouteRecordRaw = {
         title: '购物车'
       },
       component: () => import('@/views/mall/shoppingCart/index.vue')
-    }
+    },
+    personalCenterRouter
   ]
 };
 
