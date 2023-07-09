@@ -55,24 +55,25 @@ service.interceptors.response.use(
     const res = response.data;
 
     if (res.code === 401) {
-      const errorText = '您已登出，请登录后进行操作！';
-      ElMessage.warning(errorText);
-      return Promise.reject(new Error(errorText));
+      const userStore = useUserStore();
+      userStore.loginOut();
+      return Promise.reject(res);
     }
 
     if (res.code !== 0) {
       // 服务端返回错误提示就展示 否则展示
-      const errortext =
+      const errorText =
         typeof res.msg === 'string'
           ? res.msg
           : Object.values(res.msg).join('\r\n');
-      ElMessage.error(errortext || '非常抱歉，遇到了一些错误！');
-      return Promise.reject(new Error(errortext || 'error'));
+      ElMessage.error(errorText || '非常抱歉，遇到了一些错误！');
+      return Promise.reject(errorText || 'error');
     }
 
-    return response.data;
+    return res;
   },
   (error) => {
+    // 后端请求 401 时仍返回 200 状态码，所以此处无需处理 401
     return Promise.reject(error);
   }
 );
