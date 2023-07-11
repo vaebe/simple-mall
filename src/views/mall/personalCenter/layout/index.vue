@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 import { useUserStore } from '@/store';
 import { storeToRefs } from 'pinia';
 
@@ -10,6 +11,11 @@ const { userInfo } = storeToRefs(userStore);
 const route = useRoute();
 
 const routerList = computed(() => route.matched[2].children);
+
+const router = useRouter();
+const jumpPage = (item: RouteRecordRaw) => {
+  router.push({ name: item.name });
+};
 </script>
 
 <template>
@@ -29,6 +35,7 @@ const routerList = computed(() => route.matched[2].children);
             'hover:text-blue-400',
             { 'text-blue-500': item.name === route.name }
           ]"
+          @click="jumpPage(item)"
         >
           {{ item.meta?.title }}
         </li>
