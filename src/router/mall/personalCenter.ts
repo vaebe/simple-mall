@@ -19,6 +19,15 @@ const router: RouteRecordRaw = {
       },
       component: () =>
         import('@/views/mall/personalCenter/addressManagement/index.vue')
+    },
+    {
+      path: 'orderManagement',
+      name: 'personal-center-order-management',
+      meta: {
+        title: '订单管理'
+      },
+      component: () =>
+        import('@/views/mall/personalCenter/orderManagement/index.vue')
     }
   ]
 };

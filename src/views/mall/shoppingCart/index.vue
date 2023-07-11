@@ -13,6 +13,10 @@ const SelectedIcon = defineAsyncComponent(
   () => import('./components/SelectedIcon.vue')
 );
 
+const OrderConfirmation = defineAsyncComponent(
+  () => import('@/components/Order/OrderConfirmation.vue')
+);
+
 // 计算商品总金额
 const getTheTotalAmountOfTheProduct = (data: ShoppingCartInfo) => {
   return (data.productInfo.price * data.count) / 100;
@@ -88,6 +92,28 @@ const removeProduct = (row: ShoppingCartInfo) => {
     .catch(() => {
       ElMessage.info('取消删除！');
     });
+};
+
+// 购物结算
+const orderConfirmationRef = ref();
+const shoppingCheckout = () => {
+  if (selectedList.value.length === 0) {
+    ElMessage.warning('您未选中任何商品！');
+    return;
+  }
+
+  const data = selectedList.value.map((item) => {
+    return {
+      id: 0,
+      productId: item.productId,
+      userId: item.userId,
+      selected: true,
+      count: item.count,
+      productInfo: item.productInfo
+    };
+  });
+
+  orderConfirmationRef.value.openDialog(data);
 };
 </script>
 
@@ -175,12 +201,19 @@ const removeProduct = (row: ShoppingCartInfo) => {
 
           <div
             class="ml-4 px-8 py-2 cursor-pointer rounded text-white bg-red-500 hover:bg-red-400"
+            @click="shoppingCheckout"
           >
             去结算
           </div>
         </div>
       </div>
     </div>
+
+    <!--  生成订单  -->
+    <order-confirmation
+      ref="orderConfirmationRef"
+      @save-success="getTableData"
+    ></order-confirmation>
   </div>
 </template>
 

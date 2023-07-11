@@ -10,7 +10,7 @@ import { useRouter } from 'vue-router';
 import { addItemToCart, ShoppingCartInfo } from '@/api/mall/shoppingCart';
 
 const OrderConfirmation = defineAsyncComponent(
-  () => import('@/components/OrderConfirmation.vue')
+  () => import('@/components/Order/OrderConfirmation.vue')
 );
 
 const props = defineProps({
@@ -107,7 +107,7 @@ const buyItNow = () => {
     id: 0,
     productId: productDetails.id,
     userId: getUserInfo().id,
-    selected: false,
+    selected: true,
     count: purchaseQuantity.value,
     productInfo: productDetails
   };

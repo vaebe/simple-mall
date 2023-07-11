@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { ref, computed, reactive } from 'vue';
 import type { ShoppingCartInfo } from '@/api/mall/shoppingCart.ts';
-import { getUserAddressInfoList } from '@/api/backstage/dataManagement/address';
-import type { AddressInfo } from '@/api/backstage/dataManagement/address';
-import { formatPicturesInfo, concatenateAddressParts } from '@/utils/tool';
+import { getUserAddressInfoList } from '@/api/backstage/dataManagement/address.ts';
+import type { AddressInfo } from '@/api/backstage/dataManagement/address.ts';
+import { formatPicturesInfo, concatenateAddressParts } from '@/utils/tool.ts';
 import { createOrder } from '@/api/backstage/dataManagement/order.ts';
 import { useUserStore } from '@/store';
+
+const emit = defineEmits(['save-success']);
 
 // 地址信息列表
 const addressInfoList = ref<AddressInfo[]>([]);
@@ -63,7 +65,10 @@ const submitOrder = () => {
     return {
       count: item.count,
       price: item.productInfo.price,
-      productId: item.productId
+      productId: item.productId,
+      info: item.productInfo.info,
+      picture: formatPicturesInfo(item.productInfo.pictures).url,
+      name: item.productInfo.name
     };
   });
 
@@ -77,6 +82,7 @@ const submitOrder = () => {
   };
   createOrder(opts).then(() => {
     drawerVisible.value = false;
+    emit('save-success');
   });
 };
 
@@ -102,7 +108,7 @@ defineExpose({
               v-for="item in addressInfoList"
               :key="item.id"
               :class="[
-                'border rounded text-sm relative',
+                'border dark:border-zinc-800 rounded text-sm relative',
                 { 'border-blue-400': item.id === selectedAddress.id }
               ]"
               @click="selectedAddressInfoChange(item)"
@@ -140,9 +146,11 @@ defineExpose({
 
           <h1 class="mb-4">确认订单信息：</h1>
 
-          <div class="border rounded p-2">
+          <div class="border dark:border-zinc-800 rounded p-2">
             <ul>
-              <li class="mb-2 pb-2 flex items-center border-b border-gray-300">
+              <li
+                class="mb-2 pb-2 flex items-center border-b border-gray-300 dark:border-zinc-800"
+              >
                 <p class="w-1/12 h20">商品图片</p>
                 <p class="w-3/12 ml-2">名称</p>
                 <p class="w-3/12 ml-2">描述</p>
@@ -153,7 +161,7 @@ defineExpose({
               <li
                 v-for="item in products"
                 :key="item.id"
-                class="mb-2 pb-2 flex items-center text-sm border-b border-gray-300"
+                class="mb-2 pb-2 flex items-center text-sm border-b border-gray-300 dark:border-zinc-800"
               >
                 <el-image
                   class="w-1/12 h20"
@@ -165,14 +173,16 @@ defineExpose({
                 <p class="w-2/12 ml-2">{{ item.productInfo.price / 100 }}</p>
                 <p class="w-2/12 ml-2">{{ item.count }}</p>
                 <p class="w-1/12 ml-2 font-medium text-red-500">
-                  {{ item.count * item.productInfo.price }}
+                  {{ (item.count * item.productInfo.price) / 100 }}
                 </p>
               </li>
             </ul>
           </div>
 
           <div class="flex justify-end mt-4">
-            <div class="p-2 min-w-[40%] max-w-[50%] text-sm rounded border">
+            <div
+              class="p-2 min-w-[40%] max-w-[50%] text-sm rounded border dark:border-zinc-800"
+            >
               <p class="flex items-center">
                 实付款：
                 <span class="text-2xl text-red-500">¥ {{ totalPrice }}</span>

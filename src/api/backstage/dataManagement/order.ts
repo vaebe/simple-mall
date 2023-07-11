@@ -11,11 +11,13 @@ export interface OrderInfoProducts {
   orderId?: number;
   price: number;
   productId: number;
+  info: string;
+  picture: string;
+  name: string;
 }
 
-export interface OrderInfo {
+export interface CreateOrderInfo {
   addressId: number;
-  id?: number;
   paymentMethod: string;
   products: OrderInfoProducts[];
   remark: string;
@@ -23,9 +25,17 @@ export interface OrderInfo {
   userId: number;
 }
 
+export interface OrderInfo extends CreateOrderInfo {
+  id: number;
+  state: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 // 创建订单
-export const createOrder = (data: OrderInfo): Promise<ResultData<string>> =>
-  Api.post('/order/create', data);
+export const createOrder = (
+  data: CreateOrderInfo
+): Promise<ResultData<string>> => Api.post('/order/create', data);
 
 // 获取订单列表
 export const getOrderList = (
@@ -34,10 +44,10 @@ export const getOrderList = (
   Api.post('/order/getOrderList', data);
 
 // 获取用户订单信息列表
-export const getUserOrderList = (params: {
-  state: string;
-}): Promise<ResultData<OrderInfo[]>> =>
-  Api.get('/order/getUserOrderList', { params });
+export const getUserOrderList = (
+  data: GetOrderListParams
+): Promise<ResultData<OrderInfo[]>> =>
+  Api.post('/order/getUserOrderList', data);
 
 // 获取详情
 export const getOrderDetails = (params: {

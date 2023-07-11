@@ -12,8 +12,17 @@ const router: RouteRecordRaw = {
   component: () => import('@/components/ViewComponent.vue'),
   children: [
     {
+      path: 'slideshow',
+      name: 'data-management-slideshow',
+      meta: {
+        title: '轮播图管理'
+      },
+      component: () =>
+        import('@/views/backstage/dataManagement/slideshow/index.vue')
+    },
+    {
       path: 'productCategory',
-      name: 'productCategory-management',
+      name: 'data-management-productCategory',
       meta: {
         title: '商品分类管理'
       },
@@ -22,7 +31,7 @@ const router: RouteRecordRaw = {
     },
     {
       path: 'product',
-      name: 'product-management',
+      name: 'data-management-product',
       meta: {
         title: '商品管理'
       },
@@ -31,7 +40,7 @@ const router: RouteRecordRaw = {
     },
     {
       path: 'address',
-      name: 'address-management',
+      name: 'data-management-address',
       meta: {
         title: '地址管理'
       },
@@ -39,13 +48,13 @@ const router: RouteRecordRaw = {
         import('@/views/backstage/dataManagement/address/index.vue')
     },
     {
-      path: 'slideshow',
-      name: 'slideshow-management',
+      path: 'order',
+      name: 'data-management-order',
       meta: {
-        title: '轮播图管理'
+        title: '订单管理'
       },
       component: () =>
-        import('@/views/backstage/dataManagement/slideshow/index.vue')
+        import('@/views/backstage/dataManagement/order/index.vue')
     }
   ]
 };
