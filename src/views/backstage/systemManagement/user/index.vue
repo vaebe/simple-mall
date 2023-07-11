@@ -4,24 +4,16 @@ import {
   getUserList,
   removeUser
 } from '@/api/backstage/systemManagement/user.ts';
-import { usePageList } from '@/composables/usePageList.ts';
-import { getRoleInfoList } from '@/api/backstage/systemManagement/role.ts';
-import type { RoleInfo } from '@/api/backstage/systemManagement/role.ts';
+import { usePageList, useEnums } from '@/composables';
+import { getCodeNameByCodeId } from '@/utils/tool.ts';
 
 const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue')
 );
 
-// 获取角色列表
-const roleList = ref<RoleInfo[]>([]);
-const getRoleList = () => {
-  roleList.value = [];
-  getRoleInfoList().then((res) => {
-    roleList.value = res.data || [];
-  });
-};
-
+const { roleList, getRoleList, genderEnums, getGenderEnums } = useEnums();
 getRoleList();
+getGenderEnums();
 
 const searchForm = reactive({
   nickName: '',
@@ -102,27 +94,23 @@ const openAddAndViewDialog = (type: string, row?: any) => {
             ></el-image>
           </template>
         </el-table-column>
-        <el-table-column
-          label="用户账号"
-          prop="userAccount"
-          width="200"
-        ></el-table-column>
-        <el-table-column
-          label="昵称"
-          prop="nickName"
-          width="200"
-        ></el-table-column>
+        <el-table-column label="用户账号" prop="userAccount"></el-table-column>
+        <el-table-column label="昵称" prop="nickName"></el-table-column>
         <el-table-column
           label="手机号"
           prop="phoneNumber"
           width="120"
         ></el-table-column>
-        <el-table-column label="角色" prop="role" width="100"></el-table-column>
-        <el-table-column
-          label="性别"
-          prop="gender"
-          width="80"
-        ></el-table-column>
+        <el-table-column label="角色" prop="role" width="100">
+          <template #default="scope">
+            {{ getCodeNameByCodeId(scope.row.role, roleList, 'code', 'name') }}
+          </template>
+        </el-table-column>
+        <el-table-column label="性别" prop="gender" width="80">
+          <template #default="scope">
+            {{ getCodeNameByCodeId(scope.row.gender, genderEnums) }}
+          </template>
+        </el-table-column>
         <el-table-column
           label="创建时间"
           prop="createdAt"
