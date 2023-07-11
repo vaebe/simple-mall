@@ -120,7 +120,7 @@ const jumpShoppingCart = () => {
       </p>
 
       <el-badge v-else :value="cartItemsTotal" class="ml-2 mr-6">
-        <el-icon :size="26" @click="jumpShoppingCart">
+        <el-icon class="cursor-pointer" :size="26" @click="jumpShoppingCart">
           <ShoppingCart />
         </el-icon>
       </el-badge>
