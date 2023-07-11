@@ -94,6 +94,10 @@ export const formatPicturesInfo = (
 
 // 将地址信息的中的省市区街道拼接展示
 export const concatenateAddressParts = (info: AddressInfo): string => {
+  if (!info) {
+    return '';
+  }
+
   const addressParts = [
     info.provinceName,
     info.cityName,
