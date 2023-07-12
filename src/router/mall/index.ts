@@ -30,7 +30,7 @@ const router: RouteRecordRaw = {
       component: () => import('@/views/mall/productDetails/index.vue')
     },
     {
-      path: 'searchProductList/:keyword',
+      path: 'searchProductList',
       name: 'mall-search-product-list',
       meta: {
         title: '搜索商品列表'

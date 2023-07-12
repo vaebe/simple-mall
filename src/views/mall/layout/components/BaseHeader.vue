@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, defineAsyncComponent } from 'vue';
+import { ref, defineAsyncComponent, reactive } from 'vue';
 import { getAllProductCategoryList } from '@/api/backstage/dataManagement/productCategory';
 import type { ProductCategoryInfo } from '@/api/backstage/dataManagement/productCategory';
 import { useUserStore, useShoppingCartStore } from '@/store';
@@ -20,6 +20,11 @@ const setShowDrawerProductTypeList = () => {
 const userStore = useUserStore();
 const { isLogin } = storeToRefs(userStore);
 
+const searchForm = reactive({
+  name: '',
+  pid: undefined
+});
+
 // 商品分类列表
 const productCategoryInfoList = ref<ProductCategoryInfo[]>([]);
 const getProductCategoryInfoList = () => {
@@ -36,17 +41,14 @@ getCartItemsTotal();
 
 const router = useRouter();
 
-// 搜索文本
-const searchText = ref('');
-
 // 跳转搜索商品列表
 const jumpSearchProductList = () => {
-  router.push(`/mall/searchProductList/${searchText.value}`);
+  router.push({ path: '/mall/searchProductList', query: searchForm });
 };
 
 // 根据商品分类搜索商品
-const searchForProductsByProductCategory = (productCategory: string) => {
-  searchText.value = productCategory;
+const searchForProductsByProductCategory = (id) => {
+  searchForm.pid = id;
   jumpSearchProductList();
   showDrawerProductTypeList.value = false;
 };
@@ -86,7 +88,7 @@ const jumpShoppingCart = () => {
             v-for="item in productCategoryInfoList"
             :key="item.id"
             class="last:ml-0 py-4 px-2 text-lg font-medium cursor-pointer border-transparent border-b-2 hover:border-black"
-            @click="searchForProductsByProductCategory(item.name)"
+            @click="searchForProductsByProductCategory(item.id)"
           >
             {{ item.name }}
           </li>
@@ -97,7 +99,7 @@ const jumpShoppingCart = () => {
     <div class="flex items-center">
       <div class="mr-2">
         <el-input
-          v-model="searchText"
+          v-model="searchForm.name"
           placeholder="请输入关键词"
           @keyup.enter="jumpSearchProductList"
         >
@@ -138,7 +140,7 @@ const jumpShoppingCart = () => {
           v-for="item in productCategoryInfoList"
           :key="item.id"
           class="last:ml-0 py-4 px-2 text-lg font-medium cursor-pointer border-transparent border-b-2 hover:border-black"
-          @click="searchForProductsByProductCategory(item.name)"
+          @click="searchForProductsByProductCategory(item.id)"
         >
           {{ item.name }}
         </li>

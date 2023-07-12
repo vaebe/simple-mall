@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineAsyncComponent, reactive } from 'vue';
+import { defineAsyncComponent, reactive, watch, onBeforeUnmount } from 'vue';
 import { getProductList } from '@/api/backstage/dataManagement/product';
 import { usePageList } from '@/composables/usePageList';
 import { useRoute } from 'vue-router';
@@ -9,7 +9,8 @@ const ProductList = defineAsyncComponent(
 );
 
 const searchForm = reactive({
-  name: ''
+  name: '',
+  productCategoryId: 0
 });
 
 const { page, tableData, handleCurrentChange } = usePageList({
@@ -18,16 +19,28 @@ const { page, tableData, handleCurrentChange } = usePageList({
 });
 
 const route = useRoute();
-const keyword = route.params.keyword as string;
-if (keyword) {
-  searchForm.name = keyword;
-  handleCurrentChange(1);
-}
+
+const routeWatch = watch(
+  () => route.query,
+  () => {
+    const { name, pid } = route.query;
+    if (name || pid) {
+      searchForm.name = (name as string) || '';
+      searchForm.productCategoryId = pid ? Number(pid) : 0;
+      handleCurrentChange(1);
+    }
+  },
+  { immediate: true, deep: true }
+);
+
+onBeforeUnmount(() => {
+  routeWatch();
+});
 </script>
 
 <template>
   <div class="searchProductList w-full flex flex-col items-center">
-    <div class="w-full xl:w-10/12 mt-4">
+    <div v-if="tableData.length !== 0" class="w-full xl:w-10/12 mt-4">
       <product-list :product-list="tableData"></product-list>
 
       <div class="mt-4 flex justify-center">
@@ -41,6 +54,8 @@ if (keyword) {
         />
       </div>
     </div>
+
+    <div v-else class="h-[40rem]">没有符合条件的商品~</div>
   </div>
 </template>
 
