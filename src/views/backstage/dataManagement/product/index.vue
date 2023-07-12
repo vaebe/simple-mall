@@ -13,6 +13,13 @@ const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue')
 );
 
+const productCategoryAll = {
+  id: 0,
+  name: '全部',
+  code: '00',
+  sort: 0
+};
+
 // 商品分类列表
 const productCategoryInfoList = ref<ProductCategoryInfo[]>([]);
 const getProductCategoryInfoList = () => {
@@ -22,6 +29,7 @@ const getProductCategoryInfoList = () => {
   };
   getProductCategoryList(page).then((res) => {
     productCategoryInfoList.value = res.data.list || [];
+    productCategoryInfoList.value.unshift(productCategoryAll);
   });
 };
 getProductCategoryInfoList();

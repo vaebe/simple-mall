@@ -4,6 +4,7 @@ import type { PaginationParameter } from '@/types';
 
 interface GetProductListParams extends PaginationParameter {
   name: string;
+  productCategoryId: string;
 }
 
 export interface ProductInfoPictures {
