@@ -1,6 +1,7 @@
 import Api from '../../base';
 import type { ResultData, ResultPageListData } from '../../base';
 import type { PaginationParameter } from '@/types';
+import type { AddressInfo } from './address.ts';
 
 interface GetOrderListParams extends PaginationParameter {
   state: string;
@@ -32,6 +33,11 @@ export interface OrderInfo extends CreateOrderInfo {
   updatedAt: string;
 }
 
+// 订单详情
+export interface OrderDetails extends OrderInfo {
+  addressInfo: AddressInfo;
+}
+
 // 创建订单
 export const createOrder = (
   data: CreateOrderInfo
@@ -52,7 +58,7 @@ export const getUserOrderList = (
 // 获取详情
 export const getOrderDetails = (params: {
   id: number;
-}): Promise<ResultData<OrderInfo>> => Api.get('/order/details', { params });
+}): Promise<ResultData<OrderDetails>> => Api.get('/order/details', { params });
 
 // 更新订单状态
 export const updateOrderStatus = (data: {

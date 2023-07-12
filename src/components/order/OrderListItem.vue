@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { defineAsyncComponent, ref } from 'vue';
 import type { PropType } from 'vue';
 import type { OrderInfo } from '@/api/backstage/dataManagement/order.ts';
 import { useEnums } from '@/composables';
 import { getCodeNameByCodeId } from '@/utils/tool.ts';
+
+const OrderDetails = defineAsyncComponent(() => import('./OrderDetails.vue'));
 
 defineProps({
   itemData: {
@@ -15,6 +18,12 @@ defineProps({
 
 const { orderStatusEnums, getOrderStatusEnums } = useEnums();
 getOrderStatusEnums();
+
+// 查看详情
+const orderDetailsRef = ref();
+const viewOrderDetails = (row: OrderInfo) => {
+  orderDetailsRef.value.openDialog(row.id);
+};
 </script>
 
 <template>
@@ -33,7 +42,7 @@ getOrderStatusEnums();
         </p>
       </div>
 
-      <el-button link>查看</el-button>
+      <el-button link @click="viewOrderDetails(itemData)">查看</el-button>
     </div>
     <ul
       v-for="productItem in itemData.products"
@@ -59,6 +68,9 @@ getOrderStatusEnums();
         {{ (productItem.count * productItem.price) / 100 }}
       </li>
     </ul>
+
+    <!-- 订单详情 -->
+    <order-details ref="orderDetailsRef"></order-details>
   </div>
 </template>
 
