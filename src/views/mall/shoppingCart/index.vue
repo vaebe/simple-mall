@@ -14,7 +14,7 @@ const SelectedIcon = defineAsyncComponent(
 );
 
 const OrderConfirmation = defineAsyncComponent(
-  () => import('@/components/Order/OrderConfirmation.vue')
+  () => import('@/components/order/OrderConfirmation.vue')
 );
 
 // 计算商品总金额

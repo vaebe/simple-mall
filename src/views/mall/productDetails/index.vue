@@ -10,7 +10,7 @@ import { useRouter } from 'vue-router';
 import { addItemToCart, ShoppingCartInfo } from '@/api/mall/shoppingCart';
 
 const OrderConfirmation = defineAsyncComponent(
-  () => import('@/components/Order/OrderConfirmation.vue')
+  () => import('@/components/order/OrderConfirmation.vue')
 );
 
 const props = defineProps({
