@@ -35,6 +35,8 @@ const useUserStore = defineStore(
 
       if (data.userInfo.role === '00') {
         router.push('/backstage');
+      } else {
+        router.push('/');
       }
     };
 
