@@ -6,6 +6,7 @@ import type { AddressInfo } from '@/api/backstage/dataManagement/address.ts';
 import { formatPicturesInfo, concatenateAddressParts } from '@/utils/tool.ts';
 import { createOrder } from '@/api/backstage/dataManagement/order.ts';
 import { useUserStore } from '@/store';
+import { useRouter } from 'vue-router';
 
 const emit = defineEmits(['save-success']);
 
@@ -59,6 +60,7 @@ const orderNotes = ref('');
 
 const { getUserInfo } = useUserStore();
 
+const router = useRouter();
 //  提交订单
 const submitOrder = () => {
   const orderInfoProducts = products.value.map((item) => {
@@ -80,9 +82,13 @@ const submitOrder = () => {
     totalPrice: totalPrice.value,
     userId: getUserInfo().id
   };
-  createOrder(opts).then(() => {
+  createOrder(opts).then((res) => {
     drawerVisible.value = false;
+
     emit('save-success');
+
+    // 跳转订单支付页面
+    router.push(`/mall/orderPay/${res.data}`);
   });
 };
 

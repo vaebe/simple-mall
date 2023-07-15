@@ -45,6 +45,15 @@ const router: RouteRecordRaw = {
       },
       component: () => import('@/views/mall/shoppingCart/index.vue')
     },
+    {
+      path: 'orderPay/:orderId',
+      name: 'mall-order-pay',
+      props: true,
+      meta: {
+        title: '订单支付'
+      },
+      component: () => import('@/views/mall/orderPay/index.vue')
+    },
     personalCenterRouter
   ]
 };
