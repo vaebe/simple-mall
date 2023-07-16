@@ -28,9 +28,7 @@ const jumpToDetails = (id: number) => {
 </script>
 
 <template>
-  <ul
-    class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
-  >
+  <ul class="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
     <li
       v-for="item in productList"
       :key="item.id"
