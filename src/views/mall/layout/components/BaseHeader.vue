@@ -53,19 +53,8 @@ const searchForProductsByProductCategory = (id) => {
   showDrawerProductTypeList.value = false;
 };
 
-// 跳转登录
-const jumpLogin = () => {
-  router.push('/login');
-};
-
-// 跳转注册
-const jumpRegister = () => {
-  router.push('/userRegister');
-};
-
-// 跳转购物车
-const jumpShoppingCart = () => {
-  router.push('/mall/shoppingCart');
+const jumpPageByPath = (path: string) => {
+  router.push(path);
 };
 </script>
 
@@ -110,19 +99,26 @@ const jumpShoppingCart = () => {
       </div>
 
       <p v-if="!isLogin" class="mr-2">
-        <span class="cursor-pointer hover:text-blue-400" @click="jumpLogin">
+        <span
+          class="cursor-pointer hover:text-blue-400"
+          @click="jumpPageByPath('/login')"
+        >
           登录
         </span>
         <span
           class="ml-2 cursor-pointer hover:text-blue-400"
-          @click="jumpRegister"
+          @click="jumpPageByPath('/register')"
         >
           注册
         </span>
       </p>
 
       <el-badge v-else :value="cartItemsTotal" class="ml-2 mr-6">
-        <el-icon class="cursor-pointer" :size="26" @click="jumpShoppingCart">
+        <el-icon
+          class="cursor-pointer"
+          :size="26"
+          @click="jumpPageByPath('/mall/shoppingCart')"
+        >
           <ShoppingCart />
         </el-icon>
       </el-badge>

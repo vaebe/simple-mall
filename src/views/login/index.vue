@@ -7,6 +7,9 @@ import { cloneDeep } from 'lodash-es';
 import { Encrypt } from '@/utils/password';
 import { getSlideshowsByType } from '@/api/backstage/dataManagement/slideshow';
 import type { SlideshowInfo } from '@/api/backstage/dataManagement/slideshow';
+import { useRoute, useRouter } from 'vue-router';
+
+const { VITE_APP_TITLE } = import.meta.env;
 
 // 获取轮播图列表
 const slideshowList = ref<SlideshowInfo[]>([]);
@@ -14,37 +17,10 @@ getSlideshowsByType({ type: '01' }).then((res) => {
   slideshowList.value = res.data || [];
 });
 
-const { VITE_APP_TITLE } = import.meta.env;
-
-// 判断当前是否是登录页面
-const isLogin = ref(true);
-const loginButText = computed(() => (isLogin.value ? '登录' : '点击注册'));
-const tipsText = computed(() =>
-  isLogin.value ? '没有账号，点击注册！' : '已有账号，点击登录！'
-);
-
-// 切换页面类型： 登录｜注册
-const pageTypeChange = () => {
-  isLogin.value = !isLogin.value;
-};
-
 // 验证码倒计时
 const captchaCountdown = ref(0);
 
-onMounted(() => {
-  // 获取缓存的倒计时
-  const storeCaptchaCountdown = parseInt(
-    window.localStorage.getItem('captchaCountdown') || '0'
-  );
-  captchaCountdown.value = storeCaptchaCountdown;
-
-  // 缓存的倒计时不等于 0 时继续进行倒计时
-  if (storeCaptchaCountdown !== 0) {
-    startCaptchaCountdown();
-  }
-});
-
-// 获取验证码的定时器
+// 验证码的定时器
 let captchaCountdownTimer = 0;
 // 清除获取验证码的定时器
 const clearCaptchaCountdownTimer = () => {
@@ -68,6 +44,19 @@ const startCaptchaCountdown = () => {
     }
   }, 1000);
 };
+
+onMounted(() => {
+  // 获取缓存的倒计时
+  const storeCaptchaCountdown = parseInt(
+    window.localStorage.getItem('captchaCountdown') || '0'
+  );
+  captchaCountdown.value = storeCaptchaCountdown;
+
+  // 缓存的倒计时不等于 0 时继续进行倒计时
+  if (storeCaptchaCountdown !== 0) {
+    startCaptchaCountdown();
+  }
+});
 
 // 页面销毁前清除定时器
 onBeforeUnmount(() => {
@@ -140,6 +129,21 @@ const sendTheVerificationCode = () => {
       ElMessage.warning('请检查账号是否填写正确！');
     }
   });
+};
+
+const route = useRoute();
+
+// 判断当前是否是登录页面
+const isLogin = computed(() => route.path.includes('login'));
+const loginButText = computed(() => (isLogin.value ? '登录' : '点击注册'));
+const tipsText = computed(() =>
+  isLogin.value ? '没有账号，点击注册！' : '已有账号，点击登录！'
+);
+
+const router = useRouter();
+// 切换页面类型： 登录｜注册
+const pageTypeChange = () => {
+  router.push(isLogin.value ? 'register' : 'login');
 };
 
 // 注册
