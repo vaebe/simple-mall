@@ -83,12 +83,9 @@ const jumpPageByPath = (path: string) => {
 
         <p
           class="h-10 flex items-center hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer"
+          @click="jumpPageByPath('/mall/shoppingCart')"
         >
-          <el-icon
-            class="cursor-pointer"
-            :size="24"
-            @click="jumpPageByPath('/mall/shoppingCart')"
-          >
+          <el-icon class="cursor-pointer" :size="24">
             <ShoppingCart />
           </el-icon>
           <span class="ml-2">购物车</span>
