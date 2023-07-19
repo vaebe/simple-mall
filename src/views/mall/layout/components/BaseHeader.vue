@@ -1,38 +1,19 @@
 <script lang="ts" setup>
-import { ref, defineAsyncComponent, reactive } from 'vue';
-import { getAllProductCategoryList } from '@/api/backstage/dataManagement/productCategory';
-import type { ProductCategoryInfo } from '@/api/backstage/dataManagement/productCategory';
+import { defineAsyncComponent } from 'vue';
 import { useUserStore, useShoppingCartStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { ShoppingCart, Search, Expand } from '@element-plus/icons-vue';
+import { ShoppingCart } from '@element-plus/icons-vue';
 
 const ThemeSwitch = defineAsyncComponent(
   () => import('@/components/ThemeSwitch.vue')
 );
 
-// 侧边展示商品分类列表
-const showDrawerProductTypeList = ref(false);
-const setShowDrawerProductTypeList = () => {
-  showDrawerProductTypeList.value = true;
-};
+const { VITE_APP_TITLE } = import.meta.env;
 
 const userStore = useUserStore();
-const { isLogin } = storeToRefs(userStore);
-
-const searchForm = reactive({
-  name: '',
-  pid: undefined
-});
-
-// 商品分类列表
-const productCategoryInfoList = ref<ProductCategoryInfo[]>([]);
-const getProductCategoryInfoList = () => {
-  getAllProductCategoryList().then((res) => {
-    productCategoryInfoList.value = res.data || [];
-  });
-};
-getProductCategoryInfoList();
+const { isLogin, isAdmin, userInfo } = storeToRefs(userStore);
+const { loginOut } = userStore;
 
 const shoppingCartStore = useShoppingCartStore();
 const { getCartItemsTotal } = shoppingCartStore;
@@ -40,19 +21,6 @@ const { cartItemsTotal } = storeToRefs(shoppingCartStore);
 getCartItemsTotal();
 
 const router = useRouter();
-
-// 跳转搜索商品列表
-const jumpSearchProductList = () => {
-  router.push({ path: '/mall/searchProductList', query: searchForm });
-};
-
-// 根据商品分类搜索商品
-const searchForProductsByProductCategory = (id) => {
-  searchForm.pid = id;
-  jumpSearchProductList();
-  showDrawerProductTypeList.value = false;
-};
-
 const jumpPageByPath = (path: string) => {
   router.push(path);
 };
@@ -60,44 +28,16 @@ const jumpPageByPath = (path: string) => {
 
 <template>
   <div
-    class="mall-base-header w-full px-2 flex items-center justify-between sticky z-50 top-0 border-b border-slate-300 bg-slate-200 dark:bg-slate-800 dark:text-white dark:border-slate-900"
+    class="w-full h-10 px-4 relative z-50 flex items-center justify-between bg-white dark:bg-black"
   >
     <div class="flex items-center">
-      <el-image src="/vite.svg" fit="fill"></el-image>
-
-      <div class="block lg:hidden py-3">
-        <el-icon size="30" @click="setShowDrawerProductTypeList">
-          <Expand />
-        </el-icon>
-      </div>
-
-      <div class="hidden lg:block">
-        <ul class="flex items-center">
-          <li
-            v-for="item in productCategoryInfoList"
-            :key="item.id"
-            class="last:ml-0 py-4 px-2 text-lg font-medium cursor-pointer border-transparent border-b-2 hover:border-black"
-            @click="searchForProductsByProductCategory(item.id)"
-          >
-            {{ item.name }}
-          </li>
-        </ul>
-      </div>
+      <el-image class="w-5" src="/vite.svg" fit="fill"></el-image>
+      <span class="ml-2 cursor-pointer" @click="jumpPageByPath('/mall')">
+        {{ VITE_APP_TITLE }}
+      </span>
     </div>
 
     <div class="flex items-center">
-      <div class="mr-2">
-        <el-input
-          v-model="searchForm.name"
-          placeholder="请输入关键词"
-          @keyup.enter="jumpSearchProductList"
-        >
-          <template #append>
-            <el-button :icon="Search" @click="jumpSearchProductList" />
-          </template>
-        </el-input>
-      </div>
-
       <p v-if="!isLogin" class="mr-2">
         <span
           class="cursor-pointer hover:text-blue-400"
@@ -113,35 +53,60 @@ const jumpPageByPath = (path: string) => {
         </span>
       </p>
 
-      <el-badge v-else :value="cartItemsTotal" class="ml-2 mr-6">
-        <el-icon
-          class="cursor-pointer"
-          :size="26"
-          @click="jumpPageByPath('/mall/shoppingCart')"
+      <div v-else class="flex items-center">
+        <el-tooltip
+          effect="dark"
+          :content="userInfo.nickName"
+          placement="bottom"
         >
-          <ShoppingCart />
-        </el-icon>
-      </el-badge>
+          <p
+            class="w-24 h-10 px-2 truncate leading-10 hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer"
+          >
+            {{ userInfo.nickName }}
+          </p>
+        </el-tooltip>
 
-      <theme-switch></theme-switch>
+        <p
+          class="h-10 leading-10 px-2 hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer"
+          @click="jumpPageByPath('/mall/personalCenter')"
+        >
+          个人中心
+        </p>
+
+        <p
+          v-if="isAdmin"
+          class="h-10 leading-10 px-2 hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer"
+          @click="jumpPageByPath('/backstage')"
+        >
+          后台管理
+        </p>
+
+        <p
+          class="h-10 flex items-center hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer"
+        >
+          <el-icon
+            class="cursor-pointer"
+            :size="24"
+            @click="jumpPageByPath('/mall/shoppingCart')"
+          >
+            <ShoppingCart />
+          </el-icon>
+          <span class="ml-2">购物车</span>
+          (
+          <span class="text-red-500">{{ cartItemsTotal }}</span>
+          )
+        </p>
+
+        <p
+          class="h-10 leading-10 px-2 hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer"
+          @click="loginOut"
+        >
+          退出登录
+        </p>
+      </div>
+
+      <theme-switch class="ml-2"></theme-switch>
     </div>
-
-    <el-drawer
-      v-model="showDrawerProductTypeList"
-      :with-header="false"
-      direction="ltr"
-    >
-      <ul class="">
-        <li
-          v-for="item in productCategoryInfoList"
-          :key="item.id"
-          class="last:ml-0 py-4 px-2 text-lg font-medium cursor-pointer border-transparent border-b-2 hover:border-black"
-          @click="searchForProductsByProductCategory(item.id)"
-        >
-          {{ item.name }}
-        </li>
-      </ul>
-    </el-drawer>
   </div>
 </template>
 

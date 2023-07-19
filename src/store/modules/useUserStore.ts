@@ -26,6 +26,9 @@ const useUserStore = defineStore(
       userInfo
     });
 
+    // 是否是管理员
+    const isAdmin = computed(() => userInfo.role === '00');
+
     const router = useRouter();
 
     // 设置登录返回数据
@@ -33,7 +36,7 @@ const useUserStore = defineStore(
       Object.assign(loginResData, data);
       Object.assign(userInfo, data.userInfo);
 
-      if (data.userInfo.role === '00') {
+      if (isAdmin.value) {
         router.push('/backstage');
       } else {
         router.push('/');
@@ -72,7 +75,8 @@ const useUserStore = defineStore(
       getUserInfo,
       getToken,
       loginOut,
-      isLogin
+      isLogin,
+      isAdmin
     };
   },
   {
