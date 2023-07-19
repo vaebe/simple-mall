@@ -5,14 +5,14 @@ import { userLogin, userRegister, getVerificationCode } from '@/api/login';
 import { useUserStore } from '@/store';
 import { cloneDeep } from 'lodash-es';
 import { Encrypt } from '@/utils/password';
+import { getSlideshowsByType } from '@/api/backstage/dataManagement/slideshow';
+import type { SlideshowInfo } from '@/api/backstage/dataManagement/slideshow';
 
-const carouselList = [
-  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-1.jpeg',
-  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-2.jpeg',
-  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-3.jpeg',
-  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-4.jpeg',
-  'https://cdn.qiniu.vaebe.top/simple-mall/home-carousel-6.jpg'
-];
+// 获取轮播图列表
+const slideshowList = ref<SlideshowInfo[]>([]);
+getSlideshowsByType({ type: '01' }).then((res) => {
+  slideshowList.value = res.data || [];
+});
 
 const { VITE_APP_TITLE } = import.meta.env;
 
@@ -180,8 +180,8 @@ const loginOrRegister = () => {
   <div class="login-box flex items-center">
     <div class="w-4/12">
       <el-carousel indicator-position="none" height="100vh">
-        <el-carousel-item v-for="item in carouselList" :key="item">
-          <el-image :src="item" class="w-full h-full"></el-image>
+        <el-carousel-item v-for="item in slideshowList" :key="item.id">
+          <el-image :src="item.imageURL" class="w-full h-full"></el-image>
         </el-carousel-item>
       </el-carousel>
     </div>
