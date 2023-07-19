@@ -37,6 +37,10 @@ getRecommendedProductList();
 
     <!-- 商品列表 -->
     <product-list :product-list="recommendedProductList"></product-list>
+
+    <div class="flex justify-center mt-4">
+      <el-button @click="getRecommendedProductList">重新获取</el-button>
+    </div>
   </div>
 </template>
 
