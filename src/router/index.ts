@@ -51,9 +51,20 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to) => {
+router.beforeEach((to, _from, next) => {
+  const userStore = useUserStore();
 
-  return false
-})
+  // 进入后台管理页面 是管理员直接方形，否则提示并导航到首页
+  if (to.fullPath.includes('backstage')) {
+    if (userStore.isAdmin) {
+      next();
+    } else {
+      ElMessage.warning('您没有权限进入！');
+      next('/');
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;
