@@ -141,6 +141,7 @@ const tipsText = computed(() =>
 );
 
 const router = useRouter();
+
 // 切换页面类型： 登录｜注册
 const pageTypeChange = () => {
   router.push(isLogin.value ? 'register' : 'login');

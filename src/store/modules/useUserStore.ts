@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
-import { reactive, computed } from 'vue';
+import { reactive, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import type { LoginResData, UserInfo } from '@/api/login';
 import { resetObjToPrimitiveType } from '@/utils/tool';
@@ -29,6 +29,12 @@ const useUserStore = defineStore(
     // 是否是管理员
     const isAdmin = computed(() => userInfo.role === '00');
 
+    // 保存进入登录页面的路径实现从哪来回哪里去
+    const enterTheLoginPagePath = ref('/');
+    const setEnterTheLoginPagePath = (path: string): void => {
+      enterTheLoginPagePath.value = path;
+    };
+
     const router = useRouter();
 
     // 设置登录返回数据
@@ -39,7 +45,7 @@ const useUserStore = defineStore(
       if (isAdmin.value) {
         router.push('/backstage');
       } else {
-        router.push('/');
+        router.push(enterTheLoginPagePath.value);
       }
     };
 
@@ -76,7 +82,8 @@ const useUserStore = defineStore(
       getToken,
       loginOut,
       isLogin,
-      isAdmin
+      isAdmin,
+      setEnterTheLoginPagePath
     };
   },
   {
