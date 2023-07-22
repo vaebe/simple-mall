@@ -45,8 +45,6 @@ const searchForProductsByProductCategory = (id) => {
     class="mall-base-header w-full px-10 flex items-center justify-between sticky z-50 top-0 border-b border-slate-300 bg-slate-200 dark:bg-slate-800 dark:text-white dark:border-slate-900"
   >
     <div class="flex items-center">
-      <el-image src="/vite.svg" fit="fill"></el-image>
-
       <div class="block lg:hidden py-3">
         <el-icon size="30" @click="setShowDrawerProductTypeList">
           <Expand />
