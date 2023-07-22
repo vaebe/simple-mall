@@ -3,6 +3,17 @@ import { ref } from 'vue';
 import { getAreasByParams } from '@/api/backstage/dataManagement/address';
 import type { AreaInfo } from '@/api/backstage/dataManagement/address';
 
+defineProps({
+  width: {
+    type: String,
+    default: '50%'
+  },
+  placement: {
+    type: String,
+    default: 'bottom'
+  }
+});
+
 const emit = defineEmits(['change']);
 
 const selectedAreaList = ref<AreaInfo[]>([]);
@@ -51,8 +62,8 @@ const selectedAreaChange = (index: number) => {
 <template>
   <el-popover
     :visible="popoverVisible"
-    placement="bottom"
-    width="100%"
+    :placement="placement"
+    :width="width"
     trigger="click"
   >
     <div>
@@ -72,7 +83,7 @@ const selectedAreaChange = (index: number) => {
 
       <el-divider direction="horizontal"></el-divider>
 
-      <ul class="grid grid-cols-6 gap-4">
+      <ul class="grid grid-cols-5 gap-4">
         <li
           v-for="item in areaList"
           :key="item.id"
