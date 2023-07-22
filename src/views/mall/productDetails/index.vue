@@ -13,12 +13,22 @@ const OrderConfirmation = defineAsyncComponent(
   () => import('@/components/order/OrderConfirmation.vue')
 );
 
+const AreaSelection = defineAsyncComponent(
+  () => import('@/components/addressTableList/AreaSelection.vue')
+);
+
 const props = defineProps({
   id: {
     type: String,
     default: ''
   }
 });
+
+// 配送区域
+const deliveryAreaText = ref('四川 巴中市 恩阳区');
+const areaSelectionChange = (_list, text) => {
+  deliveryAreaText.value = text;
+};
 
 const productDetails = reactive({}) as ProductInfo;
 
@@ -179,17 +189,22 @@ const buyItNow = () => {
           </div>
         </div>
 
-        <!-- 地址选择 todo 待实现-->
         <div class="flex items-center mt-8">
           <p class="text-sm">配送区域</p>
 
-          <p class="ml-2 cursor-pointer">四川 巴中市 恩阳区</p>
+          <p class="ml-2 cursor-pointer">{{ deliveryAreaText }}</p>
 
           <p class="mx-2 text-gray-500 text-sm">有货</p>
 
-          <p class="text-gray-400 text-sm cursor-pointer hover:text-blue-400">
-            修改
-          </p>
+          <div class="w-10">
+            <area-selection @change="areaSelectionChange">
+              <p
+                class="text-gray-400 text-sm cursor-pointer hover:text-blue-400"
+              >
+                修改
+              </p>
+            </area-selection>
+          </div>
         </div>
 
         <div class="mt-4">

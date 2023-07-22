@@ -84,14 +84,15 @@ const areaSelectionChange = (list: AreaInfo[], text: string) => {
   const [province, city, district, street] = list;
 
   dialogForm.provinceCityDistrictName = text;
-  dialogForm.province = province?.id;
-  dialogForm.provinceName = province?.extName;
-  dialogForm.city = city?.id;
-  dialogForm.cityName = city?.extName;
-  dialogForm.district = district?.id;
-  dialogForm.districtName = district?.extName;
-  dialogForm.street = street?.id;
-  dialogForm.streetName = street?.extName;
+
+  dialogForm.province = province ? province.id : 0;
+  dialogForm.provinceName = province ? province.extName : '';
+  dialogForm.city = city ? city.id : 0;
+  dialogForm.cityName = city ? city.extName : '';
+  dialogForm.district = district ? district.id : 0;
+  dialogForm.districtName = district ? district.extName : '';
+  dialogForm.street = street ? street.id : 0;
+  dialogForm.streetName = street ? street.extName : '';
 };
 
 defineExpose({

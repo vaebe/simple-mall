@@ -106,5 +106,5 @@ export const concatenateAddressParts = (info: AddressInfo): string => {
   ];
   const filteredParts = addressParts.filter(Boolean);
 
-  return filteredParts.join('/');
+  return filteredParts.join('  ');
 };

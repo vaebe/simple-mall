@@ -46,7 +46,7 @@ const getAreaListByParams = (item?: AreaInfo) => {
       // 最后一级才进行赋值
       areaInfoText.value = selectedAreaList.value
         .map((item) => item.extName)
-        .join('/');
+        .join('  ');
 
       emit('change', selectedAreaList.value, areaInfoText.value);
     }
@@ -75,10 +75,12 @@ const selectedAreaChange = (index: number) => {
           @click="selectedAreaChange(index)"
         >
           {{ item.extName }}
-          <span v-show="selectedAreaList.length - 1 !== index">/</span>
+          <span v-show="selectedAreaList.length - 1 !== index" class="mx-2">
+            /
+          </span>
         </span>
 
-        <p v-if="selectedAreaList.length === 0">选择省/自治区</p>
+        <p v-if="selectedAreaList.length === 0">选择省 / 自治区</p>
       </div>
 
       <el-divider direction="horizontal"></el-divider>
