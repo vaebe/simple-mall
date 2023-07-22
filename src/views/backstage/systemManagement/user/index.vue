@@ -156,6 +156,7 @@ const openAddAndViewDialog = (type: string, row?: any) => {
     <add-and-view-dialog
       ref="addAndViewDialogRef"
       :role-list="roleList"
+      :gender-list="genderEnums"
       @refresh-data="reset"
     ></add-and-view-dialog>
   </div>

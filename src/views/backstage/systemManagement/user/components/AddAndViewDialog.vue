@@ -8,10 +8,17 @@ import { useUploadOpts } from '@/composables/useFile.ts';
 import { Plus } from '@element-plus/icons-vue';
 import type { FormRules, UploadProps } from 'element-plus';
 import type { UploadRes } from '@/api/common.ts';
+import type { EnumInfo } from '@/api/backstage/systemManagement/dictionary';
 
 defineProps({
   roleList: {
     type: Array as PropType<RoleInfo[]>,
+    default: () => {
+      return [];
+    }
+  },
+  genderList: {
+    type: Array as PropType<EnumInfo[]>,
     default: () => {
       return [];
     }
@@ -114,7 +121,7 @@ defineExpose({
       </el-form-item>
 
       <el-form-item v-if="dialogType === 'add'" label="密码：" prop="password">
-        <el-input v-model="dialogForm.password" show-password type="password" />
+        <el-input v-model="dialogForm.password" type="password" show-password />
       </el-form-item>
 
       <el-form-item label="手机号：">
@@ -128,10 +135,10 @@ defineExpose({
       <el-form-item label="性别：">
         <el-select v-model="dialogForm.gender" placeholder="请选择性别">
           <el-option
-            v-for="item in []"
-            :key="item"
-            :label="item"
-            :value="item"
+            v-for="item in genderList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.code"
           />
         </el-select>
       </el-form-item>
@@ -162,7 +169,9 @@ defineExpose({
             :lazy="true"
           ></el-image>
 
-          <el-icon v-else><Plus /></el-icon>
+          <el-icon v-else>
+            <Plus />
+          </el-icon>
         </el-upload>
       </el-form-item>
     </el-form>
