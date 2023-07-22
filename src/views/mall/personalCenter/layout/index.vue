@@ -21,8 +21,11 @@ const jumpPage = (item: RouteRecordRaw) => {
 <template>
   <div class="mt-4 w-full xl:w-10/12 grid grid-cols-6 gap-4">
     <el-card shadow="never" class="min-h-[83vh]">
-      <el-avatar :src="userInfo.avatar" />
-      <p class="truncate">{{ userInfo.nickName }}</p>
+      <div class="flex justify-center">
+        <el-avatar :src="userInfo.avatar" />
+      </div>
+
+      <p class="truncate text-center mt-4">{{ userInfo.nickName }}</p>
 
       <el-divider></el-divider>
 
@@ -31,8 +34,7 @@ const jumpPage = (item: RouteRecordRaw) => {
           v-for="item in routerList"
           :key="item.name"
           :class="[
-            'cursor-pointer',
-            'hover:text-blue-400',
+            'cursor-pointer mb-2 hover:text-blue-400',
             { 'text-blue-500': item.name === route.name }
           ]"
           @click="jumpPage(item)"
