@@ -4,6 +4,7 @@ import type { PropType } from 'vue';
 import type { OrderInfo } from '@/api/backstage/dataManagement/order.ts';
 import { useEnums } from '@/composables';
 import { getCodeNameByCodeId } from '@/utils/tool.ts';
+import { useRouter } from 'vue-router';
 
 const OrderDetails = defineAsyncComponent(() => import('./OrderDetails.vue'));
 
@@ -24,6 +25,12 @@ const orderDetailsRef = ref();
 const viewOrderDetails = (row: OrderInfo) => {
   orderDetailsRef.value.openDialog(row.id);
 };
+
+const router = useRouter();
+// 订单支付
+const orderPay = (row: OrderInfo) => {
+  router.push(`/mall/orderPay/${row.id}`);
+};
 </script>
 
 <template>
@@ -42,7 +49,23 @@ const viewOrderDetails = (row: OrderInfo) => {
         </p>
       </div>
 
-      <el-button link @click="viewOrderDetails(itemData)">查看</el-button>
+      <div>
+        <el-button link size="small" @click="viewOrderDetails(itemData)">
+          查看
+        </el-button>
+        <!-- 待支付状态才可以支付 -->
+        <el-button
+          v-if="itemData.state === '00'"
+          type="primary"
+          link
+          size="small"
+          @click="orderPay(itemData)"
+        >
+          支付
+        </el-button>
+        <!-- todo 订单删除待实现 -->
+        <el-button type="danger" link size="small">删除</el-button>
+      </div>
     </div>
     <ul
       v-for="productItem in itemData.products"
