@@ -49,15 +49,13 @@ const removeRow = (row: AddressInfo) => {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
-  })
-    .then(async () => {
-      const res = await removeAddressInfo({ id: row.id });
-      if (res?.code === 0) {
-        ElMessage.success('删除成功');
-        emit('refresh-data');
-      }
-    })
-    .finally(() => {});
+  }).then(async () => {
+    const res = await removeAddressInfo({ id: row.id });
+    if (res?.code === 0) {
+      ElMessage.success('删除成功');
+      emit('refresh-data');
+    }
+  });
 };
 
 // 是否显示设置默认地址按钮

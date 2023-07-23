@@ -65,3 +65,8 @@ export const updateOrderStatus = (data: {
   id: number;
   state: string;
 }): Promise<ResultData<string>> => Api.post('/order/updateOrderStatus', data);
+
+// 删除订单
+export const removeOrderInfo = (params: {
+  id: number;
+}): Promise<ResultData<string>> => Api.delete('/order/delete', { params });

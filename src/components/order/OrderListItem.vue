@@ -1,24 +1,32 @@
 <script setup lang="ts">
 import { defineAsyncComponent, ref } from 'vue';
 import type { PropType } from 'vue';
-import type { OrderInfo } from '@/api/backstage/dataManagement/order.ts';
-import { useEnums } from '@/composables';
-import { getCodeNameByCodeId } from '@/utils/tool.ts';
+import { removeOrderInfo } from '@/api/backstage/dataManagement/order';
+import type { OrderInfo } from '@/api/backstage/dataManagement/order';
+import { getCodeNameByCodeId } from '@/utils/tool';
 import { useRouter } from 'vue-router';
+import { EnumInfo } from '@/api/backstage/systemManagement/dictionary.ts';
 
 const OrderDetails = defineAsyncComponent(() => import('./OrderDetails.vue'));
 
-defineProps({
+const props = defineProps({
   itemData: {
     type: Object as PropType<OrderInfo>,
     default: () => {
       return {};
     }
+  },
+  refreshData: {
+    type: Function,
+    default: () => {}
+  },
+  orderStatusEnums: {
+    type: Array as PropType<EnumInfo[]>,
+    default: () => {
+      return [];
+    }
   }
 });
-
-const { orderStatusEnums, getOrderStatusEnums } = useEnums();
-getOrderStatusEnums();
 
 // 查看详情
 const orderDetailsRef = ref();
@@ -30,6 +38,21 @@ const router = useRouter();
 // 订单支付
 const orderPay = (row: OrderInfo) => {
   router.push(`/mall/orderPay/${row.id}`);
+};
+
+// 删除订单
+const del = (row: OrderInfo) => {
+  ElMessageBox.confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(async () => {
+    const res = await removeOrderInfo({ id: row.id });
+    if (res?.code === 0) {
+      ElMessage.success('删除成功');
+      props.refreshData && props.refreshData();
+    }
+  });
 };
 </script>
 
@@ -63,8 +86,9 @@ const orderPay = (row: OrderInfo) => {
         >
           支付
         </el-button>
-        <!-- todo 订单删除待实现 -->
-        <el-button type="danger" link size="small">删除</el-button>
+        <el-button type="danger" link size="small" @click="del(itemData)">
+          删除
+        </el-button>
       </div>
     </div>
     <ul

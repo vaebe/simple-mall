@@ -59,7 +59,10 @@ reset();
         <span class="text-title">{{ $route.meta.title }}</span>
       </div>
 
-      <order-list :table-data="tableData"></order-list>
+      <order-list
+        :table-data="tableData"
+        @refresh-data="handleCurrentChange(1)"
+      ></order-list>
 
       <el-pagination
         background

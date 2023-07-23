@@ -41,7 +41,11 @@ reset();
       ></el-tab-pane>
     </el-tabs>
 
-    <order-list :table-data="tableData" class="my-2"></order-list>
+    <order-list
+      :table-data="tableData"
+      class="my-2"
+      @refresh-data="handleCurrentChange(1)"
+    ></order-list>
 
     <el-pagination
       background

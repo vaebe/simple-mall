@@ -2,6 +2,7 @@
 import { defineAsyncComponent } from 'vue';
 import type { PropType } from 'vue';
 import type { OrderInfo } from '@/api/backstage/dataManagement/order.ts';
+import { useEnums } from '@/composables';
 
 const OrderListItem = defineAsyncComponent(() => import('./OrderListItem.vue'));
 
@@ -13,6 +14,15 @@ defineProps({
     }
   }
 });
+
+const emit = defineEmits(['refresh-data']);
+
+const { orderStatusEnums, getOrderStatusEnums } = useEnums();
+getOrderStatusEnums();
+
+const refreshData = () => {
+  emit('refresh-data');
+};
 </script>
 
 <template>
@@ -29,6 +39,8 @@ defineProps({
       v-for="item in tableData"
       :key="item.id"
       :item-data="item"
+      :order-status-enums="orderStatusEnums"
+      :refresh-data="refreshData"
     ></order-list-item>
   </div>
 </template>
