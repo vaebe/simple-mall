@@ -44,3 +44,8 @@ export const getVerificationCode = (
 export const userRegister = (
   data: LoginParams
 ): Promise<ResultData<LoginResData>> => Api.post('/user/register', data);
+
+// 获取用户详情
+export const getUserDetails = (params: {
+  id: number;
+}): Promise<ResultData<UserInfo>> => Api.get('/user/details', { params });

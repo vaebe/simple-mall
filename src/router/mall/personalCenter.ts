@@ -7,10 +7,19 @@ const router: RouteRecordRaw = {
     title: '个人中心'
   },
   redirect: (to: RouteLocationNormalized) => {
-    return `${to.path}/addressManagement`;
+    return `${to.path}/personalInfo`;
   },
   component: () => import('@/views/mall/personalCenter/layout/index.vue'),
   children: [
+    {
+      path: 'personalInfo',
+      name: 'personal-center-personal-info',
+      meta: {
+        title: '个人信息'
+      },
+      component: () =>
+        import('@/views/mall/personalCenter/personalInfo/index.vue')
+    },
     {
       path: 'addressManagement',
       name: 'personal-center-address-management',

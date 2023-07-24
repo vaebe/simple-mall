@@ -1,6 +1,7 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 import { reactive, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { getUserDetails } from '@/api/login';
 import type { LoginResData, UserInfo } from '@/api/login';
 import { resetObjToPrimitiveType } from '@/utils/tool';
 
@@ -54,6 +55,13 @@ const useUserStore = defineStore(
       return loginResData.userInfo;
     };
 
+    // 刷新用户信息
+    const refreshUserInfo = (): void => {
+      getUserDetails({ id: userInfo.id }).then((res) => {
+        Object.assign(userInfo, res.data);
+      });
+    };
+
     const isLogin = computed(() => !!loginResData.userInfo.id);
 
     // 获取 token
@@ -83,6 +91,7 @@ const useUserStore = defineStore(
       loginOut,
       isLogin,
       isAdmin,
+      refreshUserInfo,
       setEnterTheLoginPagePath
     };
   },

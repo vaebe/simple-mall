@@ -22,6 +22,13 @@ defineProps({
     default: () => {
       return [];
     }
+  },
+  /*
+  显示角色设置
+   */
+  showRoleSet: {
+    type: Boolean,
+    default: true
   }
 });
 
@@ -52,12 +59,11 @@ const rules = reactive<FormRules>({
     {
       min: 4,
       max: 40,
-      message: '请输入大于4小于40的昵称！',
+      message: '请输入大于4小于40长度的昵称！',
       trigger: 'blur'
     }
   ],
   password: [
-    { required: true, message: '密码不能为空！', trigger: 'blur' },
     {
       min: 6,
       max: 12,
@@ -71,9 +77,9 @@ const rules = reactive<FormRules>({
 const {
   dialogTitle,
   dialogIsView,
-  dialogType,
   openDialog,
   dialogVisible,
+  dialogType,
   dialogFormRef,
   save
 } = usePageListDialog({
@@ -120,7 +126,15 @@ defineExpose({
         ></el-input>
       </el-form-item>
 
-      <el-form-item v-if="dialogType === 'add'" label="密码：" prop="password">
+      <el-form-item
+        label="密码："
+        prop="password"
+        :rules="{
+          required: dialogType === 'add',
+          message: '密码不能为空！',
+          trigger: 'blur'
+        }"
+      >
         <el-input v-model="dialogForm.password" type="password" show-password />
       </el-form-item>
 
@@ -143,7 +157,7 @@ defineExpose({
         </el-select>
       </el-form-item>
 
-      <el-form-item label="角色：" prop="role">
+      <el-form-item v-if="showRoleSet" label="角色：" prop="role">
         <el-select v-model="dialogForm.role" placeholder="请选择角色">
           <el-option
             v-for="item in roleList"
