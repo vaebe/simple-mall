@@ -26,7 +26,7 @@ const getPaymentQRCode = () => {
   QRCodeLoading.value = true;
   const opts = {
     info: details.products.map((item) => item.name).join(','),
-    orderId: 'mall' + details.id,
+    orderId: details.id + '',
     price: details.totalPrice
   };
   weChatPay(opts)
@@ -96,7 +96,6 @@ console.log(props.orderId);
 
 <template>
   <div class="h-[100vh]">
-    {{ wsData }}
     <!--   不是待支付状态 -->
     <div v-if="details.state !== '00'">
       <p class="text-4xl">
