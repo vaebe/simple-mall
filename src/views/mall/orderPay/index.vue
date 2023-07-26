@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch, onBeforeUnmount } from 'vue';
 import { getOrderDetails } from '@/api/backstage/dataManagement/order';
 import type { OrderDetails } from '@/api/backstage/dataManagement/order';
 import { concatenateAddressParts, getCodeNameByCodeId } from '@/utils/tool.ts';
 import { weChatPay } from '@/api/mall/orderPay';
 import { useEnums } from '@/composables';
+import { useWebSocket } from '@vueuse/core';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   orderId: {
@@ -64,11 +66,37 @@ const getDetails = () => {
 };
 getDetails();
 
+const router = useRouter();
+
+const {
+  status,
+  data: wsData,
+  close
+} = useWebSocket(`ws://127.0.0.1:51015/ws?id=${props.orderId}`);
+
+const wsDataWatch = watch(
+  () => wsData.value,
+  () => {
+    console.log(status, wsData);
+    if (['OPEN', 'CONNECTING'].includes(status.value)) {
+      const res = JSON.parse(wsData.value);
+      if (res.type === 'orderPay' && res.code === 0) {
+        // todo 跳转支付成功页面
+        router.push('/');
+      }
+    }
+  }
+);
+onBeforeUnmount(() => {
+  close();
+  wsDataWatch();
+});
 console.log(props.orderId);
 </script>
 
 <template>
   <div class="h-[100vh]">
+    {{ wsData }}
     <!--   不是待支付状态 -->
     <div v-if="details.state !== '00'">
       <p class="text-4xl">
