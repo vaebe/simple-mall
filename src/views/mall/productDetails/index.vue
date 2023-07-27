@@ -130,7 +130,7 @@ const buyItNow = () => {
   <div class="w-full xl:w-10/12 mt-4">
     <div class="flex justify-between mb-4">
       <div class="w-1/2 px-8">
-        <el-carousel height="380px" :interval="5000">
+        <el-carousel height="480px" :interval="5000">
           <el-carousel-item
             v-for="item in productDetails.pictures"
             :key="item.id"
@@ -236,7 +236,7 @@ const buyItNow = () => {
 
     <!-- 商品详情 -->
     <div
-      class="sticky top-[8vh] z-40 py-2 px-8 flex text-sm bg-slate-100 dark:bg-stone-950"
+      class="sticky top-[8vh] z-40 py-2 px-8 flex text-sm bg-slate-200 dark:bg-stone-950"
     >
       <p
         v-for="item in infoNavList"
