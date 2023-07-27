@@ -121,9 +121,9 @@ defineExpose({
             >
               <span
                 v-if="item.defaultAddress === '01'"
-                class="absolute top-1 right-1 z-10 cursor-pointer rounded text-xs bg-blue-300"
+                class="absolute top-1 right-1 z-10 cursor-pointer px-2 text-xs bg-gray-200 dark:text-black"
               >
-                默认地址
+                默认
               </span>
 
               <p class="font-medium pt-4 px-4">
@@ -195,14 +195,14 @@ defineExpose({
               </p>
               <p class="my-2">
                 寄送至:
-                <span class="text-gray-500">
+                <span class="ml-2">
                   {{ concatenateAddressParts(selectedAddress) }}
                   {{ selectedAddress.detailedAddress }}
                 </span>
               </p>
               <p>
                 收货人:
-                <span class="text-gray-500">
+                <span class="ml-2">
                   {{ selectedAddress.name }} {{ selectedAddress.phone }}
                 </span>
               </p>
