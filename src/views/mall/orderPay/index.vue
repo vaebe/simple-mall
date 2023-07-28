@@ -66,13 +66,15 @@ const getDetails = () => {
 };
 getDetails();
 
-const router = useRouter();
+const { VITE_APP_WS_URL } = import.meta.env;
 
 const {
   status,
   data: wsData,
   close
-} = useWebSocket(`ws://127.0.0.1:51015/ws?id=${props.orderId}`);
+} = useWebSocket(`${VITE_APP_WS_URL}?id=${props.orderId}`);
+
+const router = useRouter();
 
 const wsDataWatch = watch(
   () => wsData.value,
