@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { defineAsyncComponent, ref } from 'vue';
 import type { PropType } from 'vue';
-import { removeOrderInfo } from '@/api/backstage/dataManagement/order';
+import {
+  removeOrderInfo,
+  orderRefund
+} from '@/api/backstage/dataManagement/order';
 import type { OrderInfo } from '@/api/backstage/dataManagement/order';
 import { getCodeNameByCodeId } from '@/utils/tool';
 import { useRouter } from 'vue-router';
@@ -54,6 +57,25 @@ const del = (row: OrderInfo) => {
     }
   });
 };
+
+const refund = (row: OrderInfo) => {
+  ElMessageBox.confirm('确认发起退款吗, 是否继续?', '退款', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(async () => {
+    const res = await orderRefund({
+      orderId: row.id + '',
+      info: row.products.map((item) => item.info).join('\r\n'),
+      price: row.totalPrice + ''
+    });
+
+    if (res?.code === 0) {
+      ElMessage.success('正在退款中..');
+      props.refreshData && props.refreshData();
+    }
+  });
+};
 </script>
 
 <template>
@@ -85,6 +107,16 @@ const del = (row: OrderInfo) => {
           @click="orderPay(itemData)"
         >
           支付
+        </el-button>
+        <!-- 已支付可以退款 -->
+        <el-button
+          v-if="itemData.state === '01'"
+          type="primary"
+          link
+          size="small"
+          @click="refund(itemData)"
+        >
+          退款
         </el-button>
         <el-button type="danger" link size="small" @click="del(itemData)">
           删除

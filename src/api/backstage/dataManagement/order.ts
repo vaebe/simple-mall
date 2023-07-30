@@ -60,13 +60,18 @@ export const getOrderDetails = (params: {
   id: number;
 }): Promise<ResultData<OrderDetails>> => Api.get('/order/details', { params });
 
-// 更新订单状态
-export const updateOrderStatus = (data: {
-  id: number;
-  state: string;
-}): Promise<ResultData<string>> => Api.post('/order/updateOrderStatus', data);
-
 // 删除订单
 export const removeOrderInfo = (params: {
   id: number;
 }): Promise<ResultData<string>> => Api.delete('/order/delete', { params });
+
+// 订单退款
+export interface OrderRefundParams {
+  info: string;
+  orderId: string;
+  price: string;
+}
+
+export const orderRefund = (
+  data: OrderRefundParams
+): Promise<ResultData<string>> => Api.post('/pay/orderRefund', data);
