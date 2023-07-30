@@ -4,7 +4,7 @@ import type { ResultData } from '../base';
 export interface WeChatPayParams {
   info: string;
   orderId: string;
-  price: number;
+  price: string;
 }
 
 export interface weChatPayRes {

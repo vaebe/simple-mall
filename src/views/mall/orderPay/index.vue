@@ -27,7 +27,7 @@ const getPaymentQRCode = () => {
   const opts = {
     info: details.products.map((item) => item.name).join(','),
     orderId: details.id + '',
-    price: details.totalPrice
+    price: details.totalPrice + ''
   };
   weChatPay(opts)
     .then((res) => {
