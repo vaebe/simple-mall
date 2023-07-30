@@ -83,8 +83,7 @@ const wsDataWatch = watch(
     if (['OPEN', 'CONNECTING'].includes(status.value)) {
       const res = JSON.parse(wsData.value);
       if (res.type === 'orderPay' && res.code === 0) {
-        // todo 跳转支付成功页面
-        router.push('/');
+        router.push(`/mall/orderPaymentSuccessful/${props.orderId}`);
       }
     }
   }
