@@ -42,7 +42,7 @@ const jumpHome = () => {
 </script>
 
 <template>
-  <div>
+  <div class="px-4">
     <el-card class="mt-4">
       <div class="flex flex-col items-center mb-10">
         <h1 class="text-center text-xl font-medium mb-4">
