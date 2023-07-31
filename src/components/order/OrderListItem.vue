@@ -67,7 +67,7 @@ const refund = (row: OrderInfo) => {
     const res = await orderRefund({
       orderId: row.id + '',
       info: row.products.map((item) => item.info).join('\r\n'),
-      price: row.totalPrice + ''
+      price: row.totalPrice / 100 + ''
     });
 
     if (res?.code === 0) {
@@ -90,7 +90,7 @@ const refund = (row: OrderInfo) => {
 
         <p class="ml-6">
           订单金额：
-          <span class="text-red-500">{{ itemData.totalPrice }}</span>
+          <span class="text-red-500">{{ itemData.totalPrice / 100 }}</span>
         </p>
       </div>
 

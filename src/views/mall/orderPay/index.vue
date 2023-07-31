@@ -27,7 +27,7 @@ const getPaymentQRCode = () => {
   const opts = {
     info: details.products.map((item) => item.name).join(','),
     orderId: details.id + '',
-    price: details.totalPrice + ''
+    price: details.totalPrice / 100 + ''
   };
   weChatPay(opts)
     .then((res) => {
@@ -119,7 +119,7 @@ console.log(props.orderId);
 
       <p class="mt-4">订单编号：{{ details.id }}</p>
 
-      <p class="mt-4">订单金额：{{ details.totalPrice }}元</p>
+      <p class="mt-4">订单金额：{{ details.totalPrice / 100 }}元</p>
 
       <p class="mt-4">
         收货信息：{{ details.addressInfo.name }} {{ details.addressInfo.phone }}

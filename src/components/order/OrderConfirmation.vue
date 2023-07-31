@@ -79,7 +79,7 @@ const submitOrder = () => {
     products: orderInfoProducts,
     paymentMethod: '',
     remark: orderNotes.value,
-    totalPrice: totalPrice.value,
+    totalPrice: totalPrice.value * 100,
     userId: getUserInfo().id
   };
   createOrder(opts).then((res) => {
