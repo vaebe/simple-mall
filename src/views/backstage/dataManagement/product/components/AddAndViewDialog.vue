@@ -27,7 +27,9 @@ const dialogForm = reactive<ProductInfo>({
   pictures: [],
   price: 0,
   productCategoryId: 0,
-  stock: 0
+  stock: 0,
+  detailImages: '',
+  parameterImages: ''
 });
 
 const rules = reactive<FormRules>({
@@ -48,6 +50,44 @@ const rules = reactive<FormRules>({
   stock: [{ required: true, message: '商品库存不能为空!', trigger: 'blur' }]
 });
 
+// todo 考虑将 详情图片、商品参数图片 从新增分离出去单独上传
+// 详情图片
+const detailImages = ref([]);
+
+// 商品参数图片
+const parameterImages = ref([]);
+
+const formatImages = (imagesStr: string) => {
+  if (imagesStr) {
+    const list = JSON.parse(imagesStr);
+    return list.map((item) => {
+      return {
+        name: item,
+        url: item
+      };
+    });
+  } else {
+    return [];
+  }
+};
+
+const openDialogFunc = (data: ProductInfo) => {
+  detailImages.value = formatImages(data.detailImages);
+  parameterImages.value = formatImages(data.parameterImages);
+};
+
+const beforeSaveFunc = async () => {
+  dialogForm.detailImages = JSON.stringify(
+    detailImages.value.map((item) => item.url)
+  );
+
+  dialogForm.parameterImages = JSON.stringify(
+    parameterImages.value.map((item) => item.url)
+  );
+
+  return true;
+};
+
 const {
   dialogTitle,
   dialogIsView,
@@ -56,9 +96,11 @@ const {
   dialogFormRef,
   save
 } = usePageListDialog({
+  openDialogFunc,
   saveForm: dialogForm,
   saveApi: saveProductInfo,
   updateApi: saveProductInfo,
+  beforeSaveFunc,
   saveSuccessFunc: () => {
     emit('refresh-data');
   }
@@ -73,11 +115,32 @@ const handleUploadSuccess: UploadProps['onSuccess'] = (res, uploadFile) => {
     type: uploadFile.raw?.type,
     productId: dialogForm.id
   };
-
-  console.log(res, uploadFile, dialogForm.pictures, 'pppp');
 };
 
+// 图片上传参数
 const { uploadHeaders, uploadUrl } = useUploadOpts();
+
+const detailImagesUploadSuccess: UploadProps['onSuccess'] = (
+  res,
+  uploadFile
+) => {
+  const fileLen = detailImages.value.length;
+  detailImages.value[fileLen - 1] = {
+    url: res.data,
+    name: uploadFile.name
+  };
+};
+
+const parameterImagesUploadSuccess: UploadProps['onSuccess'] = (
+  res,
+  uploadFile
+) => {
+  const fileLen = parameterImages.value.length;
+  parameterImages.value[fileLen - 1] = {
+    url: res.data,
+    name: uploadFile.name
+  };
+};
 
 const picturePreviewDialogVisible = ref(false);
 const picturePreviewDialogImageUrl = ref('');
@@ -85,6 +148,10 @@ const picturePreviewDialogImageUrl = ref('');
 const handlePicturePreview: UploadProps['onPreview'] = (uploadFile) => {
   picturePreviewDialogImageUrl.value = uploadFile.url!;
   picturePreviewDialogVisible.value = true;
+};
+
+const closePicturePreview = () => {
+  picturePreviewDialogVisible.value = false;
 };
 
 defineExpose({
@@ -158,14 +225,46 @@ defineExpose({
           :on-success="handleUploadSuccess"
           :on-preview="handlePicturePreview"
         >
-          <el-icon><Plus /></el-icon>
+          <el-icon>
+            <Plus />
+          </el-icon>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="详情图片">
+        <el-upload
+          v-model:file-list="detailImages"
+          :action="uploadUrl"
+          :headers="uploadHeaders"
+          list-type="picture-card"
+          :on-success="detailImagesUploadSuccess"
+          :on-preview="handlePicturePreview"
+        >
+          <el-icon>
+            <Plus />
+          </el-icon>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="参数图片">
+        <el-upload
+          v-model:file-list="parameterImages"
+          :action="uploadUrl"
+          :headers="uploadHeaders"
+          list-type="picture-card"
+          :on-success="parameterImagesUploadSuccess"
+          :on-preview="handlePicturePreview"
+        >
+          <el-icon>
+            <Plus />
+          </el-icon>
         </el-upload>
       </el-form-item>
     </el-form>
 
-    <el-dialog v-model="picturePreviewDialogVisible">
-      <img w-full :src="picturePreviewDialogImageUrl" alt="查看图片" />
-    </el-dialog>
+    <el-image-viewer
+      v-if="picturePreviewDialogVisible"
+      :url-list="[picturePreviewDialogImageUrl]"
+      @close="closePicturePreview"
+    ></el-image-viewer>
 
     <template #footer>
       <div class="flex justify-center">
