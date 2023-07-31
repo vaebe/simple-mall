@@ -170,7 +170,7 @@ defineExpose({
 
       <el-form-item label="头像：">
         <el-upload
-          class="w-16 h-16 flex items-start justify-center rounded border"
+          class="w-40 h-40 flex items-center justify-center rounded border overflow-hidden"
           :headers="uploadHeaders"
           :action="uploadUrl"
           :show-file-list="false"
@@ -183,7 +183,7 @@ defineExpose({
             :lazy="true"
           ></el-image>
 
-          <el-icon v-else>
+          <el-icon v-else :size="30">
             <Plus />
           </el-icon>
         </el-upload>
