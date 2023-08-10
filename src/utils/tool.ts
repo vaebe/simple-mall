@@ -1,5 +1,7 @@
 import type { ProductInfoPictures } from '@/api/backstage/dataManagement/product.ts';
 import type { AddressInfo } from '@/api/backstage/dataManagement/address';
+import * as echarts from 'echarts';
+import type { EChartsType, EChartsOption } from 'echarts';
 
 type PrimitiveData = Record<
   string,
@@ -107,4 +109,38 @@ export const concatenateAddressParts = (info: AddressInfo): string => {
   const filteredParts = addressParts.filter(Boolean);
 
   return filteredParts.join('  ');
+};
+
+/**
+ * 获取 assets\img 静态资源
+ * @param url
+ */
+export const getAssetsImgFile = (url: string): string => {
+  return new URL(`../assets/img/${url}`, import.meta.url).href;
+};
+
+/**
+ *  设置 Echarts 配置
+ * @param dom
+ * @param option
+ */
+export const setEchartsDom = (
+  dom: HTMLElement,
+  option: EChartsOption
+): EChartsType => {
+  const echartsDom = echarts.getInstanceByDom(dom);
+  // 加载过图表 清除后加载
+  if (echartsDom) {
+    echartsDom?.dispose && echartsDom.dispose();
+  }
+
+  const chartBox = echarts.init(dom);
+  chartBox.setOption(option);
+  window.removeEventListener('resize', () => {
+    chartBox.resize();
+  });
+  window.addEventListener('resize', () => {
+    chartBox.resize();
+  });
+  return chartBox;
 };

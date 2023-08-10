@@ -12,7 +12,18 @@ const router: RouteRecordRaw = {
     return `${to.path}/systemManagement`;
   },
   component: () => import('@/views/backstage/layout/index.vue'),
-  children: [dataManagementRouter, systemManagementRouter]
+  children: [
+    {
+      path: 'home',
+      name: 'backstage-home',
+      meta: {
+        title: '首页'
+      },
+      component: () => import('@/views/backstage/home/index.vue')
+    },
+    dataManagementRouter,
+    systemManagementRouter
+  ]
 };
 
 export default router;
