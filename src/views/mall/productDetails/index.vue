@@ -4,7 +4,7 @@ import { getProductDetails } from '@/api/backstage/dataManagement/product';
 import type { ProductInfo } from '@/api/backstage/dataManagement/product';
 import { SuccessFilled } from '@element-plus/icons-vue';
 import { isVideo } from '@/utils/tool';
-import { useUserStore, useShoppingCartStore } from '@/store';
+import { useUserStore, useShoppingCartStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { addItemToCart, ShoppingCartInfo } from '@/api/mall/shoppingCart';

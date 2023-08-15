@@ -1,4 +1,4 @@
-import { useUserStore } from '@/store';
+import { useUserStore } from '@/stores';
 import type { UploadProps } from 'element-plus';
 
 export interface UseUploadOptsRes {

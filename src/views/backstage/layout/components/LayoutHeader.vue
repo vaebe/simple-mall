@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useUserStore } from '@/store';
+import { useUserStore } from '@/stores';
 import { defineAsyncComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { defineAsyncComponent } from 'vue';
-import { useUserStore, useShoppingCartStore } from '@/store';
+import { useUserStore, useShoppingCartStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { ShoppingCart } from '@element-plus/icons-vue';

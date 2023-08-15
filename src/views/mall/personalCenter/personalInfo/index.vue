@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent, ref } from 'vue';
-import { useUserStore } from '@/store';
+import { useUserStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import { useEnums } from '@/composables';
 import { getCodeNameByCodeId } from '@/utils/tool.ts';

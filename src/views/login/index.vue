@@ -2,7 +2,7 @@
 import { FormInstance, FormRules } from 'element-plus';
 import { computed, reactive, ref, onBeforeUnmount, onMounted } from 'vue';
 import { userLogin, userRegister, getVerificationCode } from '@/api/login';
-import { useUserStore } from '@/store';
+import { useUserStore } from '@/stores';
 import { cloneDeep } from 'lodash-es';
 import { Encrypt } from '@/utils/password';
 import { getSlideshowsByType } from '@/api/backstage/dataManagement/slideshow';

@@ -5,7 +5,7 @@ import { getUserAddressInfoList } from '@/api/backstage/dataManagement/address.t
 import type { AddressInfo } from '@/api/backstage/dataManagement/address.ts';
 import { formatPicturesInfo, concatenateAddressParts } from '@/utils/tool.ts';
 import { createOrder } from '@/api/backstage/dataManagement/order.ts';
-import { useUserStore } from '@/store';
+import { useUserStore } from '@/stores';
 import { useRouter } from 'vue-router';
 
 const emit = defineEmits(['save-success']);

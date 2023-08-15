@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
-import { useUserStore } from '@/store';
+import { useUserStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 
 const userStore = useUserStore();

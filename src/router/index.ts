@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
 import mallRouter from './mall';
 import backstageRouter from './backstage';
-import { useUserStore } from '@/store';
+import { useUserStore } from '@/stores';
 
 // 保存进入登录页面的路径
 const saveEnterTheLoginPagePath = (path: string): void => {

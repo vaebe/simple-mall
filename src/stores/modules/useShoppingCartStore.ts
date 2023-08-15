@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate, storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { getTheNumberOfItemsInTheShoppingCart } from '@/api/mall/shoppingCart';
-import { useUserStore } from '@/store';
+import { useUserStore } from '@/stores';
 
 const useShoppingCartStore = defineStore('useShoppingCartStore', () => {
   // 购物车商品数量

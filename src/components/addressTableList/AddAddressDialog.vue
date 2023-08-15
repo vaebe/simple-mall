@@ -7,7 +7,7 @@ import type {
 import { saveAddressInfo } from '@/api/backstage/dataManagement/address';
 import { usePageListDialog } from '@/composables/usePageList.ts';
 import type { FormRules } from 'element-plus';
-import { useUserStore } from '@/store';
+import { useUserStore } from '@/stores';
 import { concatenateAddressParts } from '@/utils/tool';
 import { validatePhoneNumber } from '@/utils/validateForm';
 
