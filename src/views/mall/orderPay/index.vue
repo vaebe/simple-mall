@@ -66,6 +66,7 @@ const getDetails = () => {
 };
 getDetails();
 
+// 创建 WebSocket 连接
 const { VITE_APP_WS_URL } = import.meta.env;
 
 const {
@@ -76,23 +77,27 @@ const {
 
 const router = useRouter();
 
+// 监听 WebSocket 推送数据
 const wsDataWatch = watch(
   () => wsData.value,
   () => {
-    console.log(status, wsData);
     if (['OPEN', 'CONNECTING'].includes(status.value)) {
       const res = JSON.parse(wsData.value);
+
+      // 订单支付成功
       if (res.type === 'orderPay' && res.code === 0) {
+        // 跳转订单支付成功页面
         router.push(`/mall/orderPaymentSuccessful/${props.orderId}`);
       }
     }
   }
 );
+
+// 离开页面关闭 WebSocket 连接
 onBeforeUnmount(() => {
   close();
   wsDataWatch();
 });
-console.log(props.orderId);
 </script>
 
 <template>
